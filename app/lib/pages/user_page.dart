@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:onebike/pages/content/rider_page.dart';
-import 'package:onebike/pages/content/team_page.dart';
 import 'package:onebike/types/t_nation.dart';
 import 'package:onebike/types/t_team.dart';
 

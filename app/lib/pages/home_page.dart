@@ -7,16 +7,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: .center,
-        children: [
-          Cup(
-            cupName: "Lausitzcup", 
-            cupYear: "2026",
-          ),
-        ],
-      ),
+    return Cup(
+      cupName: "Lausitzcup", 
+      cupYear: "2026",
     );
   }
 

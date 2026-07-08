@@ -30,39 +30,38 @@ class Cup extends StatelessWidget {
       // "Ponickau"
     ];
 
-    return Center(
-      child: Column(
-        children: [
-          Text(
-            "$cupName $cupYear",
-            style: TextStyle(fontSize: 25),
-          ),
+    return Column(
+      children: [
+        Text(
+          "$cupName $cupYear",
+          style: TextStyle(fontSize: 25),
+        ),
 
-          Padding(
-            padding: EdgeInsetsGeometry.all(10),
-            child: Row(
-              spacing: 5,
-              children: races.map((race) =>
-                OutlinedButton(
-                  onPressed: onPressed, 
-                  child: Text(race)
-                ),
-              ).toList(),
-            ),
+        Padding(
+          padding: EdgeInsetsGeometry.all(10),
+          child: Row(
+            spacing: 5,
+            children: races.map((race) =>
+              OutlinedButton(
+                onPressed: onPressed, 
+                child: Text(race)
+              ),
+            ).toList(),
           ),
+        ),
 
-          Padding(
+        Expanded(
+          child: Padding(
             padding: EdgeInsetsGeometry.all(10),
             child: riderList(),
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 
-  Column riderList() {
-    return Column(
-      spacing: 5,
+  ListView riderList() {
+    return ListView(
       children: <Rider>[
         Rider(
           place: "1", 
@@ -88,6 +87,120 @@ class Cup extends StatelessWidget {
           nationality: "🇨🇿​ (CZE)", 
           team: "Unlimited KM Trading CZ", 
           points: 445
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
+        ), Rider(
+          place: "5", 
+          riderName: "Florian Jung", 
+          nationality: "🇩🇪​ (GER)", 
+          team: "Post SV Görlitz", 
+          points: 426
         ), Rider(
           place: "5", 
           riderName: "Florian Jung", 

@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:onebike/types/t_rider.dart';
 
 class Rider extends StatelessWidget {
 
     const Rider({
       super.key, 
       required this.place, 
-      required this.riderName, 
-      required this.nationality, 
-      required this.team, 
-      required this.points
+      // required this.riderName, 
+      // required this.nationality, 
+      // required this.team, 
+      required this.points, 
+      required this.targetRider
     });
 
     final String place;
-    final String riderName;
-    final String nationality;
-    final String team;
+    final RiderRecord targetRider;
+
+    // final String place;
+    // final String riderName;
+    // final String nationality;
+    // final String team;
     final int points;
 
     @override
@@ -30,9 +35,9 @@ class Rider extends StatelessWidget {
           padding: EdgeInsetsGeometry.all(5),
           child: riderInformation(
             place,
-            riderName, 
-            team,
-            nationality,
+            "${targetRider.firstName} ${targetRider.lastName}", 
+            targetRider.team.name,
+            "${targetRider.nationality.flagEmoji} ${targetRider.nationality.short}",
             points,
           ),
         )
@@ -50,7 +55,7 @@ class Rider extends StatelessWidget {
         crossAxisAlignment: .start,
         spacing: 25,
         children: [
-          Text(place, style: TextStyle(color: Colors.white),),
+          textField(place),
           textFieldExpanded(name),
           textFieldExpanded(team),
           textField(nationality),
@@ -59,12 +64,14 @@ class Rider extends StatelessWidget {
       );
     }
 
-    Text textField(
+    Flexible textField(
       String text
     ) {
-      return Text(
-        text,
-        style: TextStyle(color: Colors.white),
+      return Flexible(
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.white),
+        ),
       );
     }
 
