@@ -1,20 +1,19 @@
 package com.xpromus.onebike_backend.cup
 
-import com.xpromus.onebike_backend.cup.placement.CupPlacement
 import com.xpromus.onebike_backend.nation.Nation
+import com.xpromus.onebike_backend.race.Race
 import jakarta.persistence.*
 
 @Entity
 @Table
 class Cup(
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
     @Column(nullable = false)
     var cupName: String = "",
     @OneToMany
-    var placements: MutableList<CupPlacement> = mutableListOf(),
+    var races: MutableList<Race> = mutableListOf(),
     @ManyToOne
-    var primaryNation: Nation = Nation(),
-    @ManyToMany
-    var secondaryNations: MutableList<Nation> = mutableListOf(),
+    var cupNation: Nation = Nation(),
 )

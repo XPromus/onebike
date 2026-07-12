@@ -1,12 +1,12 @@
 package com.xpromus.onebike_backend.rider
 
 import com.xpromus.onebike_backend.nation.NationRepository
-import com.xpromus.onebike_backend.rider.dto.CreateRiderDto
 import com.xpromus.onebike_backend.rider.dto.GetRiderDto
-import com.xpromus.onebike_backend.rider.dto.UpdateRiderDto
-import com.xpromus.onebike_backend.rider.mapper.createRiderDtoToRider
-import com.xpromus.onebike_backend.rider.mapper.riderToGetRiderDto
-import com.xpromus.onebike_backend.rider.mapper.updateRiderDtoToRider
+import com.xpromus.onebike_backend.rider.dto.PutRiderDto
+import com.xpromus.onebike_backend.rider.mapper.toEntity
+import com.xpromus.onebike_backend.rider.mapper.toGetRiderDto
+import com.xpromus.onebike_backend.rider.mapper.toGetRiderDtoList
+import com.xpromus.onebike_backend.rider.mapper.toNewEntity
 import jakarta.persistence.EntityNotFoundException
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -18,35 +18,32 @@ class RiderService(
 ) {
 
     fun getRiders(): List<GetRiderDto> {
-        return riderRepository.findAll().map {
-            riderToGetRiderDto(it)
-        }
+        return riderRepository.findAll().toGetRiderDtoList()
     }
 
     @Transactional
-    fun createRider(
-        createRiderDto: CreateRiderDto
+    fun putRider(
+        putRiderDto: PutRiderDto
     ): GetRiderDto {
-        val riderNation = nationRepository.findById(createRiderDto.nationId).orElseThrow {
+        val nation = nationRepository.findById(putRiderDto.nationId).orElseThrow {
             EntityNotFoundException()
         }
-        val newRider = createRiderDtoToRider(createRiderDto, riderNation)
-        return riderToGetRiderDto(
-            riderRepository.save(newRider)
-        )
-    }
+        val rider: Rider = putRiderDto.id?.let {
+            riderRepository.findById(it).orElse(null)
+        }?.let {
+            putRiderDto.toEntity(
+                original = it,
+                nation = nation
+            )
+        } ?: run {
+            putRiderDto.toNewEntity(
+                nation = nation
+            )
+        }
 
-    @Transactional
-    fun updateRider(
-        updateRiderDto: UpdateRiderDto
-    ): GetRiderDto {
-        val riderNation = nationRepository.findById(updateRiderDto.nationId).orElseThrow {
-            EntityNotFoundException()
-        }
-        val updatedRider = updateRiderDtoToRider(updateRiderDto, riderNation)
-        return riderToGetRiderDto(
-            riderRepository.save(updatedRider)
-        )
+        return riderRepository.save(
+            rider
+        ).toGetRiderDto()
     }
 
     @Transactional

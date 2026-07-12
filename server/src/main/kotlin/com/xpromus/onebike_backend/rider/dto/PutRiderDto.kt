@@ -1,7 +1,7 @@
 package com.xpromus.onebike_backend.rider.dto
 
-data class UpdateRiderDto(
-    val id: Long,
+data class PutRiderDto(
+    val id: Long?,
     val firstName: String,
     val lastName: String,
     val nationId: Long

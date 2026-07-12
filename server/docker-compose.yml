@@ -1,0 +1,15 @@
+services:
+  database:
+    image: postgres
+    container_name: onebike_db
+    environment:
+      - POSTGRES_USER=onebike
+      - POSTGRES_PASSWORD=onebike
+      - POSTGRES_DB=onebike_db
+    networks:
+      - onebike_network
+    ports:
+      - "5432:5432"
+networks:
+  onebike_network:
+    driver: bridge

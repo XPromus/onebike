@@ -1,12 +1,11 @@
 package com.xpromus.onebike_backend.nation
 
-import com.xpromus.onebike_backend.nation.dto.CreateNationDto
 import com.xpromus.onebike_backend.nation.dto.GetNationDto
-import com.xpromus.onebike_backend.nation.dto.UpdateNationDto
+import com.xpromus.onebike_backend.nation.dto.PutNationDto
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/nations")
 class NationController(
     private val nationService: NationService
 ) {
@@ -16,18 +15,11 @@ class NationController(
         return nationService.getNations()
     }
 
-    @PostMapping
-    fun createNation(
-        @RequestBody createNationDto: CreateNationDto
-    ): GetNationDto {
-        return nationService.createNation(createNationDto)
-    }
-
     @PutMapping
     fun updateNation(
-        @RequestBody updateNationDto: UpdateNationDto
+        @RequestBody putNationDto: PutNationDto
     ): GetNationDto {
-        return nationService.updateNation(updateNationDto)
+        return nationService.putNation(putNationDto)
     }
 
     @DeleteMapping("/{id}")

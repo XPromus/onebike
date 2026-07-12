@@ -1,8 +1,8 @@
 package com.xpromus.onebike_backend.cup.placement.dto
 
-data class HttpPutCupPlacementDto(
-    val id: Long,
-    val targetCupId: Long,
+data class PutPlacementDto(
+    val id: Long?,
+    val targetRaceId: Long,
     val points: Int,
     val targetRiderId: Long
 )

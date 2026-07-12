@@ -1,16 +1,14 @@
 package com.xpromus.onebike_backend.nation
 
 import com.xpromus.onebike_backend.cup.Cup
+import com.xpromus.onebike_backend.race.Race
 import com.xpromus.onebike_backend.rider.Rider
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToMany
-import jakarta.persistence.OneToMany
+import jakarta.persistence.*
 
 @Entity
 class Nation(
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
     @Column
     var longName: String = "",
@@ -21,7 +19,7 @@ class Nation(
     @OneToMany
     var riders: MutableList<Rider> = mutableListOf(),
     @OneToMany
-    var cupPrimaryNations: MutableList<Cup> = mutableListOf(),
-    @ManyToMany
-    var cupSecondaryNations: MutableList<Cup> = mutableListOf(),
+    var cups: MutableList<Cup> = mutableListOf(),
+    @OneToMany
+    var races: MutableList<Race> = mutableListOf(),
 )

@@ -1,11 +1,11 @@
 package com.xpromus.onebike_backend.nation
 
-import com.xpromus.onebike_backend.nation.dto.CreateNationDto
 import com.xpromus.onebike_backend.nation.dto.GetNationDto
-import com.xpromus.onebike_backend.nation.dto.UpdateNationDto
-import com.xpromus.onebike_backend.nation.mapper.createNationDtoToNation
-import com.xpromus.onebike_backend.nation.mapper.nationToGetNationDtoMapper
-import com.xpromus.onebike_backend.nation.mapper.updateNationDtoToNation
+import com.xpromus.onebike_backend.nation.dto.PutNationDto
+import com.xpromus.onebike_backend.nation.mapper.toEntity
+import com.xpromus.onebike_backend.nation.mapper.toGetDto
+import com.xpromus.onebike_backend.nation.mapper.toGetDtoList
+import com.xpromus.onebike_backend.nation.mapper.toNewEntity
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -16,27 +16,25 @@ class NationService(
 
     fun getNations(): List<GetNationDto> {
         val nations = nationRepository.findAll()
-        return nations.map {
-            nationToGetNationDtoMapper(it)
+        return nations.toGetDtoList()
+    }
+
+    fun putNation(
+        putNationDto: PutNationDto
+    ): GetNationDto {
+        val nation: Nation = putNationDto.id?.let {
+            nationRepository.findById(it).orElse(null)
+        }?.let {
+            putNationDto.toEntity(
+                original = it
+            )
+        } ?: run {
+            putNationDto.toNewEntity()
         }
-    }
 
-    fun createNation(
-        createNationDto: CreateNationDto
-    ): GetNationDto {
-        val newNation = createNationDtoToNation(createNationDto)
-        return nationToGetNationDtoMapper(
-            nationRepository.save(newNation)
-        )
-    }
-
-    fun updateNation(
-        updateNationDto: UpdateNationDto
-    ): GetNationDto {
-        val updatedNation = updateNationDtoToNation(updateNationDto)
-        return nationToGetNationDtoMapper(
-            nationRepository.save(updatedNation)
-        )
+        return nationRepository.save(
+            nation
+        ).toGetDto()
     }
 
     @Transactional
