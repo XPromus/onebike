@@ -41,4 +41,27 @@ class Nation(
         orphanRemoval = true
     )
     var races: MutableList<Race> = mutableListOf(),
-)
+) {
+
+    fun addRider(
+        rider: Rider
+    ) {
+        riders.add(rider)
+        rider.nation = this
+    }
+
+    fun addCup(
+        cup: Cup
+    ) {
+        cups.add(cup)
+        cup.nation = this
+    }
+
+    fun addRace(
+        race: Race
+    ) {
+        races.add(race)
+        race.nation = this
+    }
+
+}

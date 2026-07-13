@@ -1,6 +1,6 @@
 package com.xpromus.onebike_backend.cup
 
-import com.xpromus.onebike_backend.cup.dto.GetCupDto
+import com.xpromus.onebike_backend.cup.dto.GetCupWithChildrenDto
 import com.xpromus.onebike_backend.cup.dto.PutCupDto
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,28 +17,28 @@ class CupController(
 ) {
 
     @GetMapping
-    fun getCups(): List<GetCupDto> {
+    fun getCups(): List<GetCupWithChildrenDto> {
         return cupService.getAll()
     }
 
     @GetMapping("/nation/{id}")
     fun getCupsInNation(
         @PathVariable id: Long
-    ): List<GetCupDto> {
+    ): List<GetCupWithChildrenDto> {
         return cupService.getCupsInNation(id)
     }
 
     @GetMapping("/name/{name}")
     fun getCupsByName(
         @PathVariable name: String
-    ): List<GetCupDto> {
+    ): List<GetCupWithChildrenDto> {
         return cupService.getCupsByName(name)
     }
 
     @PutMapping
     fun putCup(
         @RequestBody putCupDto: PutCupDto
-    ): GetCupDto {
+    ): GetCupWithChildrenDto {
         return cupService.putCupDto(putCupDto)
     }
 

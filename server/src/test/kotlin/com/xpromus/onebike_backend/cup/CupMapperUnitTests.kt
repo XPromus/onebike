@@ -1,8 +1,8 @@
 package com.xpromus.onebike_backend.cup
 
-import com.xpromus.onebike_backend.cup.dto.GetCupDto
-import com.xpromus.onebike_backend.cup.mapper.toGetCupDto
-import com.xpromus.onebike_backend.cup.mapper.toGetCupDtoList
+import com.xpromus.onebike_backend.cup.dto.GetCupWithChildrenDto
+import com.xpromus.onebike_backend.cup.mapper.toGetCupWithChildrenDto
+import com.xpromus.onebike_backend.cup.mapper.toGetCupWithChildrenDtoList
 import com.xpromus.onebike_backend.nation.Nation
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,14 +21,14 @@ class CupMapperUnitTests {
             nation = givenNation,
             url = ""
         )
-        val expected = GetCupDto(
+        val expected = GetCupWithChildrenDto(
             id = 1L,
             cupName = "Test Cup",
             raceIds = emptyList(),
             cupNationId = 1L,
             url = ""
         )
-        val actual = given.toGetCupDto()
+        val actual = given.toGetCupWithChildrenDto()
 
         assertEquals(expected, actual)
     }
@@ -51,14 +51,14 @@ class CupMapperUnitTests {
                 nation = givenNation
             ),
         )
-        val expected: List<GetCupDto> = listOf(
-            GetCupDto(
+        val expected: List<GetCupWithChildrenDto> = listOf(
+            GetCupWithChildrenDto(
                 id = 1L,
                 cupName = "Test Cup",
                 raceIds = mutableListOf(),
                 cupNationId = 1L,
                 url = ""
-            ), GetCupDto(
+            ), GetCupWithChildrenDto(
                 id = 2L,
                 cupName = "Test Cup 2",
                 raceIds = mutableListOf(),
@@ -66,7 +66,7 @@ class CupMapperUnitTests {
                 url = ""
             ),
         )
-        val actual = given.toGetCupDtoList()
+        val actual = given.toGetCupWithChildrenDtoList()
 
         assertEquals(expected, actual)
     }

@@ -1,10 +1,11 @@
 package com.xpromus.onebike_backend.nation
 
 import com.xpromus.onebike_backend.nation.dto.GetNationDto
+import com.xpromus.onebike_backend.nation.dto.GetNationWithChildrenDto
 import com.xpromus.onebike_backend.nation.dto.PutNationDto
 import com.xpromus.onebike_backend.nation.mapper.toEntity
-import com.xpromus.onebike_backend.nation.mapper.toGetDto
 import com.xpromus.onebike_backend.nation.mapper.toGetDtoList
+import com.xpromus.onebike_backend.nation.mapper.toGetWithChildrenDto
 import com.xpromus.onebike_backend.nation.mapper.toNewEntity
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -21,7 +22,7 @@ class NationService(
 
     fun putNation(
         putNationDto: PutNationDto
-    ): GetNationDto {
+    ): GetNationWithChildrenDto {
         val nation: Nation = putNationDto.id?.let {
             nationRepository.findById(it).orElse(null)
         }?.let {
@@ -34,7 +35,7 @@ class NationService(
 
         return nationRepository.save(
             nation
-        ).toGetDto()
+        ).toGetWithChildrenDto()
     }
 
     @Transactional

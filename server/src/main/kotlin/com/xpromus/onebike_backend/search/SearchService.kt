@@ -1,8 +1,8 @@
 package com.xpromus.onebike_backend.search
 
 import com.xpromus.onebike_backend.cup.CupRepository
-import com.xpromus.onebike_backend.cup.dto.GetCupDto
-import com.xpromus.onebike_backend.cup.mapper.toGetCupDtoList
+import com.xpromus.onebike_backend.cup.dto.GetCupWithChildrenDto
+import com.xpromus.onebike_backend.cup.mapper.toGetCupWithChildrenDtoList
 import com.xpromus.onebike_backend.race.RaceRepository
 import com.xpromus.onebike_backend.race.dto.GetRaceDto
 import com.xpromus.onebike_backend.race.mapper.toGetRaceDtoList
@@ -31,9 +31,9 @@ class SearchService(
             firstName = postSearchDto.searchString,
             lastName = postSearchDto.searchString
         ).toGetRiderDtoList()
-        val cups: List<GetCupDto> = cupRepository.findCupsByCupNameLike(
+        val cups: List<GetCupWithChildrenDto> = cupRepository.findCupsByCupNameLike(
             cupName = postSearchDto.searchString
-        ).toGetCupDtoList()
+        ).toGetCupWithChildrenDtoList()
         val races: List<GetRaceDto> = raceRepository.findRacesByRaceNameLike(
             raceName = postSearchDto.searchString
         ).toGetRaceDtoList()

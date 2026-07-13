@@ -2,6 +2,7 @@ package com.xpromus.onebike_backend.nation.mapper
 
 import com.xpromus.onebike_backend.nation.Nation
 import com.xpromus.onebike_backend.nation.dto.GetNationDto
+import com.xpromus.onebike_backend.nation.dto.GetNationWithChildrenDto
 import com.xpromus.onebike_backend.nation.dto.PutNationDto
 
 fun Nation.toGetDto(): GetNationDto {
@@ -13,8 +14,26 @@ fun Nation.toGetDto(): GetNationDto {
     )
 }
 
-fun List<Nation>.toGetDtoList(): List<GetNationDto> = map {
-    it.toGetDto()
+fun List<Nation>.toGetDtoList(): List<GetNationDto> {
+    return map {
+        it.toGetDto()
+    }
+}
+
+fun Nation.toGetWithChildrenDto(): GetNationWithChildrenDto {
+    return GetNationWithChildrenDto(
+        id = id ?: throw IllegalStateException("Nation must have ID"),
+        longName = longName,
+        shortName = shortName,
+        flagEmoji = flagEmoji,
+        riderIds = riders.map { it.id!! },
+        cupIds = cups.map { it.id!! },
+        raceIds = races.map { it.id!! },
+    )
+}
+
+fun List<Nation>.toGetWithChildrenDtoList(): List<GetNationWithChildrenDto> = map {
+    it.toGetWithChildrenDto()
 }
 
 fun PutNationDto.toEntity(

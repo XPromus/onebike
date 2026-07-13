@@ -1,4 +1,4 @@
-package com.xpromus.onebike_backend.error
+package com.xpromus.onebike_backend.error.dto
 
 import kotlin.time.Clock
 import kotlin.time.Instant

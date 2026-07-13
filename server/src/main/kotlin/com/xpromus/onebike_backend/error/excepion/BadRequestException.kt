@@ -1,4 +1,4 @@
-package com.xpromus.onebike_backend.error
+package com.xpromus.onebike_backend.error.excepion
 
 class BadRequestException(
     message: String

@@ -2,11 +2,27 @@ package com.xpromus.onebike_backend.cup.mapper
 
 import com.xpromus.onebike_backend.cup.Cup
 import com.xpromus.onebike_backend.cup.dto.GetCupDto
+import com.xpromus.onebike_backend.cup.dto.GetCupWithChildrenDto
 import com.xpromus.onebike_backend.cup.dto.PutCupDto
 import com.xpromus.onebike_backend.nation.Nation
 
 fun Cup.toGetCupDto(): GetCupDto {
     return GetCupDto(
+        id = id!!,
+        cupName = cupName,
+        url = url,
+        cupNationId = nation.id!!
+    )
+}
+
+fun List<Cup>.toGetCupDtoList(): List<GetCupDto> {
+    return map {
+        it.toGetCupDto()
+    }
+}
+
+fun Cup.toGetCupWithChildrenDto(): GetCupWithChildrenDto {
+    return GetCupWithChildrenDto(
         id = id!!,
         cupName = cupName,
         url = url,
@@ -17,9 +33,9 @@ fun Cup.toGetCupDto(): GetCupDto {
     )
 }
 
-fun List<Cup>.toGetCupDtoList(): List<GetCupDto> {
+fun List<Cup>.toGetCupWithChildrenDtoList(): List<GetCupWithChildrenDto> {
     return map {
-        it.toGetCupDto()
+        it.toGetCupWithChildrenDto()
     }
 }
 
