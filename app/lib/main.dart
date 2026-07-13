@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:onebike/api/team.dart';
+import 'package:onebike/components/team_search_widget.dart';
 import 'package:onebike/pages/home_page.dart';
 import 'package:onebike/pages/search_page.dart';
 import 'package:onebike/pages/user_page.dart';
@@ -47,6 +49,14 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
 
   int currentPageIndex = 0;
+  
+  late Future<List<Team>> futureTeams;
+
+  @override
+  void initState() {
+    super.initState();
+    futureTeams = fetchTeams();
+  }
 
   @override
   Widget build(BuildContext context) {

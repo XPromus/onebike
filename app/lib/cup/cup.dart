@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:onebike/rider.dart';
-import 'package:onebike/types/t_rider.dart';
 
 class Cup extends StatelessWidget {
 
