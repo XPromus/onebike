@@ -11,7 +11,7 @@ fun Race.toGetRaceDto(): GetRaceDto {
         id = id!!,
         raceName = raceName,
         lengthInKm = lengthInKm,
-        countryId = country.id!!,
+        countryId = nation.id!!,
         cupId = cup?.let { it.id!! },
         placementIds = placements.map {
             it.id!!
@@ -32,7 +32,7 @@ fun PutRaceDto.toEntity(
         id = original.id,
         raceName = raceName,
         lengthInKm = lengthInKm,
-        country = nation,
+        nation = nation,
         cup = cup,
         placements = original.placements
     )
@@ -45,7 +45,7 @@ fun PutRaceDto.toNewEntity(
     return Race(
         raceName = raceName,
         lengthInKm = lengthInKm,
-        country = nation,
+        nation = nation,
         cup = cup,
     )
 }

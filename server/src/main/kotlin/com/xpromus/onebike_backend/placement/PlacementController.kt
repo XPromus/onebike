@@ -1,7 +1,7 @@
-package com.xpromus.onebike_backend.cup.placement
+package com.xpromus.onebike_backend.placement
 
-import com.xpromus.onebike_backend.cup.placement.dto.GetPlacementDto
-import com.xpromus.onebike_backend.cup.placement.dto.PutPlacementDto
+import com.xpromus.onebike_backend.placement.dto.GetPlacementDto
+import com.xpromus.onebike_backend.placement.dto.PutPlacementDto
 import org.springframework.web.bind.annotation.*
 
 @RestController

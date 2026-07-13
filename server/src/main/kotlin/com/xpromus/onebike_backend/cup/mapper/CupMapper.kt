@@ -9,10 +9,11 @@ fun Cup.toGetCupDto(): GetCupDto {
     return GetCupDto(
         id = id!!,
         cupName = cupName,
+        url = url,
         raceIds = races.map {
             it.id!!
         },
-        cupNationId = cupNation.id!!
+        cupNationId = nation.id!!
     )
 }
 
@@ -30,7 +31,7 @@ fun PutCupDto.toEntity(
         id = originalCup.id,
         cupName = cupName,
         races = originalCup.races,
-        cupNation = nation
+        nation = nation
     )
 }
 
@@ -39,6 +40,6 @@ fun PutCupDto.toNewEntity(
 ): Cup {
     return Cup(
         cupName = cupName,
-        cupNation = nation
+        nation = nation
     )
 }

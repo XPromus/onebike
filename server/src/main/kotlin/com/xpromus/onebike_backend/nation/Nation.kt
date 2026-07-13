@@ -5,21 +5,40 @@ import com.xpromus.onebike_backend.race.Race
 import com.xpromus.onebike_backend.rider.Rider
 import jakarta.persistence.*
 
-@Entity
+@Entity(name = "nation")
+@Table(name = "nations")
 class Nation(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    @Column
+
+    @Column(nullable = false)
     var longName: String = "",
-    @Column
+
+    @Column(nullable = false)
     var shortName: String = "",
-    @Column
+
+    @Column(nullable = false)
     var flagEmoji: String = "",
-    @OneToMany
+
+    @OneToMany(
+        mappedBy = "nation",
+        cascade = [CascadeType.ALL],
+        orphanRemoval = true
+    )
     var riders: MutableList<Rider> = mutableListOf(),
-    @OneToMany
+
+    @OneToMany(
+        mappedBy = "nation",
+        cascade = [CascadeType.ALL],
+        orphanRemoval = true
+    )
     var cups: MutableList<Cup> = mutableListOf(),
-    @OneToMany
+
+    @OneToMany(
+        mappedBy = "nation",
+        cascade = [CascadeType.ALL],
+        orphanRemoval = true
+    )
     var races: MutableList<Race> = mutableListOf(),
 )

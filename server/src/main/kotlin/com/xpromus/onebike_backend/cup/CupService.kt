@@ -21,7 +21,7 @@ class CupService(
     }
 
     fun getCupsInNation(id: Long): List<GetCupDto> {
-        return cupRepository.findAllByCupNationId(id).toGetCupDtoList()
+        return cupRepository.findAllByNationId(id).toGetCupDtoList()
     }
 
     fun getCupsByName(name: String): List<GetCupDto> {
@@ -32,9 +32,12 @@ class CupService(
     fun putCupDto(
         putCupDto: PutCupDto
     ): GetCupDto {
-        val targetNation = nationRepository.findById(putCupDto.cupNationId).orElseThrow {
-            EntityNotFoundException()
-        }
+        val targetNation = nationRepository
+            .findById(
+                putCupDto.cupNationId
+            ).orElseThrow {
+                EntityNotFoundException()
+            }
 
         val cup: Cup = putCupDto.id?.let {
             cupRepository.findById(it).orElse(null)

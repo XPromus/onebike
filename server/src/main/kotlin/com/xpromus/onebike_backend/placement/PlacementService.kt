@@ -1,11 +1,11 @@
-package com.xpromus.onebike_backend.cup.placement
+package com.xpromus.onebike_backend.placement
 
-import com.xpromus.onebike_backend.cup.placement.dto.GetPlacementDto
-import com.xpromus.onebike_backend.cup.placement.dto.PutPlacementDto
-import com.xpromus.onebike_backend.cup.placement.mapper.toEntity
-import com.xpromus.onebike_backend.cup.placement.mapper.toGetPlacementDto
-import com.xpromus.onebike_backend.cup.placement.mapper.toGetPlacementDtoList
-import com.xpromus.onebike_backend.cup.placement.mapper.toNewEntity
+import com.xpromus.onebike_backend.placement.dto.GetPlacementDto
+import com.xpromus.onebike_backend.placement.dto.PutPlacementDto
+import com.xpromus.onebike_backend.placement.mapper.toEntity
+import com.xpromus.onebike_backend.placement.mapper.toGetPlacementDto
+import com.xpromus.onebike_backend.placement.mapper.toGetPlacementDtoList
+import com.xpromus.onebike_backend.placement.mapper.toNewEntity
 import com.xpromus.onebike_backend.race.Race
 import com.xpromus.onebike_backend.race.RaceRepository
 import com.xpromus.onebike_backend.rider.Rider
@@ -47,7 +47,7 @@ class PlacementService(
                 EntityNotFoundException()
             }
         val targetRider: Rider = riderRepository
-            .findById(putPlacementDto.id)
+            .findById(putPlacementDto.targetRiderId)
             .orElseThrow {
                 EntityNotFoundException()
             }

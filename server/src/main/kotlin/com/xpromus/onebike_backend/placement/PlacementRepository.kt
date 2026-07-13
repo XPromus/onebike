@@ -1,4 +1,4 @@
-package com.xpromus.onebike_backend.cup.placement
+package com.xpromus.onebike_backend.placement
 
 import org.springframework.data.jpa.repository.JpaRepository
 

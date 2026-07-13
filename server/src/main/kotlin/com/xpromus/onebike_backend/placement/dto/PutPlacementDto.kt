@@ -1,4 +1,4 @@
-package com.xpromus.onebike_backend.cup.placement.dto
+package com.xpromus.onebike_backend.placement.dto
 
 data class PutPlacementDto(
     val id: Long?,
