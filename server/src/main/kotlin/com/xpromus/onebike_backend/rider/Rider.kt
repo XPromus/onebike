@@ -41,5 +41,5 @@ class Rider(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
-    var team: Team = Team(),
+    var team: Team? = null,
 )

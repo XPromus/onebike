@@ -2,12 +2,14 @@ package com.xpromus.onebike_backend.nation
 
 import com.xpromus.onebike_backend.nation.dto.GetNationDto
 import com.xpromus.onebike_backend.nation.dto.GetNationWithChildrenDto
+import com.xpromus.onebike_backend.nation.dto.PostNationExistsDto
 import com.xpromus.onebike_backend.nation.dto.PutNationDto
 import com.xpromus.onebike_backend.nation.mapper.toEntity
 import com.xpromus.onebike_backend.nation.mapper.toGetDtoList
 import com.xpromus.onebike_backend.nation.mapper.toGetWithChildrenDto
 import com.xpromus.onebike_backend.nation.mapper.toNewEntity
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,8 +18,20 @@ class NationService(
 ) {
 
     fun getNations(): List<GetNationDto> {
-        val nations = nationRepository.findAll()
+        val nations = nationRepository.findAll(
+            Sort.by("longName").ascending()
+        )
         return nations.toGetDtoList()
+    }
+
+    fun checkIfNationExists(
+        postNationExistsDto: PostNationExistsDto
+    ): Boolean {
+        return nationRepository.existsNationByLongNameIsOrShortNameIsOrFlagEmojiIs(
+            longName = postNationExistsDto.longName,
+            shortName = postNationExistsDto.shortName,
+            flagEmoji = postNationExistsDto.flagEmoji
+        )
     }
 
     fun putNation(
