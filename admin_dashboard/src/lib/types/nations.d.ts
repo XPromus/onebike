@@ -1,5 +1,7 @@
 export type GetNationResponse = Nation[];
 
+export type NationDescriptorDto = DefaultNation;
+
 export type DefaultNation = {
     longName: string,
     shortName: string,

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { NationEditDto } from "$lib/api/types/nations.d.ts";
-	import AddTextBox from "./AddTextBox.svelte";
+	import type { NationEditDto } from "$lib/types/nations";
+	import AddTextBox from "$lib/components/AddTextBox.svelte";
 
     let { 
         nationEdit = $bindable()

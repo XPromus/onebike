@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Nation } from "$lib/api/types/nations";
+	import type { Nation } from "$lib/types/nations";
 	import NationEdit from "$lib/components/NationEdit.svelte";
 	import NationEntry from "$lib/components/NationEntry.svelte";
 	import { type PageData } from "./$types";
@@ -22,7 +22,7 @@
             <span class="font-bold text-center basis-1/3">Emoji</span>
         </div>
         <div class="flex overflow-y-scroll flex-col flex-1 min-h-0 space-y-1">
-            {#each data.items as nation (nation.id) }
+            {#each data.nations as nation (nation.id) }
                 <NationEntry onclick={() => { onNationSelect(nation) }} nation={nation}/>
             {/each}
         </div>

@@ -1,4 +1,4 @@
-import type { Nation, PostNationExistsDto, PutNationDto } from "../../api/types/nations";
+import type { Nation, PostNationExistsDto, PutNationDto } from "$lib/types/nations";
 import { env } from "$env/dynamic/private";
 
 const getURL = (path: string): string => {

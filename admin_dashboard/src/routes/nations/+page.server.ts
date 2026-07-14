@@ -1,17 +1,22 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import type { GetNationResponse } from '$lib/api/types/nations';
+import type { GetNationResponse } from '$lib/types/nations';
 
 import { env } from "$env/dynamic/private";
 const { API_BASE_URL, NATIONS_PATH } = env;
 
 export const load = (async ({ fetch }) => {
-    const res = await fetch(`${API_BASE_URL}${NATIONS_PATH}`)
+    const response = await fetch(
+        `${API_BASE_URL}${NATIONS_PATH}`
+    );
 
-    if (!res.ok) {
-        throw error(res.status, "Failed to fetch item");
+    if (!response.ok) {
+        throw error(
+            response.status, 
+            "Failed to fetch nations."
+        );
     }
 
-    const items: GetNationResponse = await res.json();
-    return { items };
+    const nations: GetNationResponse = await response.json();
+    return { nations };
 }) satisfies PageServerLoad;
