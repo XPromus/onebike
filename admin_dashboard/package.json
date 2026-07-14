@@ -15,7 +15,11 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run"
 	},
+	"dependencies": {
+		"class-variance-authority": "^0.7.1"
+	},
 	"devDependencies": {
+		"@iconify/svelte": "^5.2.2",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",

@@ -22,7 +22,7 @@
 </script>
 
 <svelte:element
-    class="text-center hover:bg-mauve-200 hover:cursor-pointer active:bg-mauve-400 py-2 transition-colors duration-200"
+    class="py-2 text-center transition-colors duration-200 hover:bg-mauve-200 hover:cursor-pointer active:bg-mauve-400"
     this={tag}
     href={href}
     disabled={href ? undefined : disabled}

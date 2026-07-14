@@ -1,6 +1,7 @@
 {
   "version": "5",
   "specifiers": {
+    "npm:@iconify/svelte@^5.2.2": "5.2.2_svelte@5.56.4",
     "npm:@sveltejs/adapter-static@^3.0.10": "3.0.10_@sveltejs+kit@2.68.0__@sveltejs+vite-plugin-svelte@7.1.2___svelte@5.56.4___vite@8.1.1__svelte@5.56.4__typescript@6.0.3__vite@8.1.1_@sveltejs+vite-plugin-svelte@7.1.2__svelte@5.56.4__vite@8.1.1_svelte@5.56.4_typescript@6.0.3_vite@8.1.1",
     "npm:@sveltejs/kit@^2.63.0": "2.68.0_@sveltejs+vite-plugin-svelte@7.1.2__svelte@5.56.4__vite@8.1.1_svelte@5.56.4_typescript@6.0.3_vite@8.1.1",
     "npm:@sveltejs/vite-plugin-svelte@^7.1.2": "7.1.2_svelte@5.56.4_vite@8.1.1",
@@ -8,6 +9,7 @@
     "npm:@tailwindcss/typography@~0.5.19": "0.5.20_tailwindcss@4.3.2",
     "npm:@tailwindcss/vite@^4.3.0": "4.3.2_vite@8.1.1",
     "npm:@vitest/browser-playwright@^4.1.8": "4.1.10_playwright@1.61.1_vitest@4.1.10_vite@8.1.1",
+    "npm:class-variance-authority@~0.7.1": "0.7.1",
     "npm:playwright@^1.60.0": "1.61.1",
     "npm:prettier-plugin-svelte@^4.1.0": "4.1.1_prettier@3.9.5_svelte@5.56.4",
     "npm:prettier-plugin-tailwindcss@0.8": "0.8.0_prettier@3.9.5_prettier-plugin-svelte@4.1.1__prettier@3.9.5__svelte@5.56.4_svelte@5.56.4",
@@ -42,6 +44,16 @@
       "dependencies": [
         "tslib"
       ]
+    },
+    "@iconify/svelte@5.2.2_svelte@5.56.4": {
+      "integrity": "sha512-XMXxD3nzH7yB68C3K4sNwzrJ1TBscODR0ZqCeNf0KGuEMCTSuCo0jHNDZ0o0iRXTylO41NSz/DWam/4atLG1yw==",
+      "dependencies": [
+        "@iconify/types",
+        "svelte"
+      ]
+    },
+    "@iconify/types@2.0.0": {
+      "integrity": "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="
     },
     "@jridgewell/gen-mapping@0.3.13": {
       "integrity": "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==",
@@ -462,6 +474,12 @@
       "integrity": "sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==",
       "dependencies": [
         "readdirp"
+      ]
+    },
+    "class-variance-authority@0.7.1": {
+      "integrity": "sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==",
+      "dependencies": [
+        "clsx"
       ]
     },
     "clsx@2.1.1": {
@@ -917,6 +935,7 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
+        "npm:@iconify/svelte@^5.2.2",
         "npm:@sveltejs/adapter-static@^3.0.10",
         "npm:@sveltejs/kit@^2.63.0",
         "npm:@sveltejs/vite-plugin-svelte@^7.1.2",
@@ -924,6 +943,7 @@
         "npm:@tailwindcss/typography@~0.5.19",
         "npm:@tailwindcss/vite@^4.3.0",
         "npm:@vitest/browser-playwright@^4.1.8",
+        "npm:class-variance-authority@~0.7.1",
         "npm:playwright@^1.60.0",
         "npm:prettier-plugin-svelte@^4.1.0",
         "npm:prettier-plugin-tailwindcss@0.8",

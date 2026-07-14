@@ -1,3 +1,20 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@theme inline {
+    --color-primary: var(--color-indigo-600);
+    --color-primary-hover: var(--color-indigo-700);
+    --color-primary-active: var(--color-indigo-800);
+
+    --color-secondary: var(--color-slate-500);
+    --color-secondary-hover: var(--color-slate-600);
+    --color-secondary-active: var(--color-slate-700);
+
+    --color-panel: var(--color-mauve-100);
+    --color-panel-hover: var(--color-mauve-300);
+    --color-panel-active: var(--color-mauve-400);
+
+    --color-text-primary: var(--color-white);
+    --color-text-panel: var(--color-black);
+}
