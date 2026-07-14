@@ -2,10 +2,12 @@ package com.xpromus.onebike_backend.rider
 
 import com.xpromus.onebike_backend.nation.NationRepository
 import com.xpromus.onebike_backend.rider.dto.GetRiderDto
+import com.xpromus.onebike_backend.rider.dto.GetRiderWithChildrenDto
 import com.xpromus.onebike_backend.rider.dto.PutRiderDto
 import com.xpromus.onebike_backend.rider.mapper.toEntity
 import com.xpromus.onebike_backend.rider.mapper.toGetRiderDto
 import com.xpromus.onebike_backend.rider.mapper.toGetRiderDtoList
+import com.xpromus.onebike_backend.rider.mapper.toGetRiderWithChildrenDtoList
 import com.xpromus.onebike_backend.rider.mapper.toNewEntity
 import jakarta.persistence.EntityNotFoundException
 import jakarta.transaction.Transactional
@@ -19,6 +21,10 @@ class RiderService(
 
     fun getRiders(): List<GetRiderDto> {
         return riderRepository.findAll().toGetRiderDtoList()
+    }
+
+    fun getRidersWithChildren(): List<GetRiderWithChildrenDto> {
+        return riderRepository.findAll().toGetRiderWithChildrenDtoList()
     }
 
     @Transactional

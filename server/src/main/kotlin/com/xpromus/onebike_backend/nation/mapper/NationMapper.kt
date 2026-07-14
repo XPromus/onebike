@@ -3,6 +3,7 @@ package com.xpromus.onebike_backend.nation.mapper
 import com.xpromus.onebike_backend.nation.Nation
 import com.xpromus.onebike_backend.nation.dto.GetNationDto
 import com.xpromus.onebike_backend.nation.dto.GetNationWithChildrenDto
+import com.xpromus.onebike_backend.nation.dto.NationDescriptorDto
 import com.xpromus.onebike_backend.nation.dto.PutNationDto
 
 fun Nation.toGetDto(): GetNationDto {
@@ -34,6 +35,14 @@ fun Nation.toGetWithChildrenDto(): GetNationWithChildrenDto {
 
 fun List<Nation>.toGetWithChildrenDtoList(): List<GetNationWithChildrenDto> = map {
     it.toGetWithChildrenDto()
+}
+
+fun Nation.toNationDescriptorDto(): NationDescriptorDto {
+    return NationDescriptorDto(
+        longName = longName,
+        shortName = shortName,
+        flagEmoji = flagEmoji
+    )
 }
 
 fun PutNationDto.toEntity(

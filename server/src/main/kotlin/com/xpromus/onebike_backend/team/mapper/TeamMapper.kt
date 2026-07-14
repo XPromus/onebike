@@ -4,6 +4,7 @@ import com.xpromus.onebike_backend.nation.Nation
 import com.xpromus.onebike_backend.team.Team
 import com.xpromus.onebike_backend.team.dto.GetTeamDto
 import com.xpromus.onebike_backend.team.dto.PutTeamDto
+import com.xpromus.onebike_backend.team.dto.TeamDescriptorDto
 
 fun Team.toGetTeamDto(): GetTeamDto {
     return GetTeamDto(
@@ -19,6 +20,20 @@ fun Team.toGetTeamDto(): GetTeamDto {
 fun List<Team>.toGetTeamDtoList(): List<GetTeamDto> {
     return map {
         it.toGetTeamDto()
+    }
+}
+
+fun Team.toTeamDescriptorDto(): TeamDescriptorDto {
+    return TeamDescriptorDto(
+        teamName = teamName,
+        shortName = shortName,
+        teamDescription = teamDescription
+    )
+}
+
+fun List<Team>.toTeamDescriptorDtoList(): List<TeamDescriptorDto> {
+    return map {
+        it.toTeamDescriptorDto()
     }
 }
 

@@ -1,6 +1,7 @@
 package com.xpromus.onebike_backend.rider
 
 import com.xpromus.onebike_backend.rider.dto.GetRiderDto
+import com.xpromus.onebike_backend.rider.dto.GetRiderWithChildrenDto
 import com.xpromus.onebike_backend.rider.dto.PutRiderDto
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,6 +20,11 @@ class RiderController(
     @GetMapping
     fun getRiders(): List<GetRiderDto> {
         return riderService.getRiders()
+    }
+
+    @GetMapping("/full")
+    fun getRidersWithChildren(): List<GetRiderWithChildrenDto> {
+        return riderService.getRidersWithChildren()
     }
 
     @PutMapping

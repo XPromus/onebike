@@ -1,9 +1,12 @@
 package com.xpromus.onebike_backend.rider.mapper
 
 import com.xpromus.onebike_backend.nation.Nation
+import com.xpromus.onebike_backend.nation.mapper.toNationDescriptorDto
 import com.xpromus.onebike_backend.rider.Rider
 import com.xpromus.onebike_backend.rider.dto.GetRiderDto
+import com.xpromus.onebike_backend.rider.dto.GetRiderWithChildrenDto
 import com.xpromus.onebike_backend.rider.dto.PutRiderDto
+import com.xpromus.onebike_backend.team.mapper.toTeamDescriptorDto
 
 fun Rider.toGetRiderDto(): GetRiderDto {
     return GetRiderDto(
@@ -17,6 +20,22 @@ fun Rider.toGetRiderDto(): GetRiderDto {
 
 fun List<Rider>.toGetRiderDtoList(): List<GetRiderDto> = map {
     it.toGetRiderDto()
+}
+
+fun Rider.toGetRiderWithChildrenDto(): GetRiderWithChildrenDto {
+    return GetRiderWithChildrenDto(
+        id = id!!,
+        firstName = firstName,
+        lastName = lastName,
+        nation = nation.toNationDescriptorDto(),
+        team = team?.toTeamDescriptorDto()
+    )
+}
+
+fun List<Rider>.toGetRiderWithChildrenDtoList(): List<GetRiderWithChildrenDto> {
+    return map {
+        it.toGetRiderWithChildrenDto()
+    }
 }
 
 fun PutRiderDto.toEntity(
