@@ -2,6 +2,7 @@ package com.xpromus.onebike_backend.placement
 
 import com.xpromus.onebike_backend.placement.dto.GetPlacementDto
 import com.xpromus.onebike_backend.placement.dto.PutPlacementDto
+import com.xpromus.onebike_backend.util.SortDirection
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -12,16 +13,28 @@ class PlacementController(
 
     @GetMapping("/race/{id}")
     fun getPlacementsByRace(
-        @PathVariable id: Long
+        @PathVariable id: Long,
+        @RequestParam(name = "sortBy", defaultValue = "finishTimeInSeconds") sortBy: String,
+        @RequestParam(name = "sortDir", defaultValue = "DESCENDING") sortDirection: SortDirection
     ): List<GetPlacementDto> {
-        return placementService.getPlacementsByRace(id)
+        return placementService.getPlacementsByRace(
+            raceId = id,
+            sortBy = sortBy,
+            sortDirection = sortDirection
+        )
     }
 
     @GetMapping("/rider/{id}")
     fun getPlacementsByRider(
-        @PathVariable id: Long
+        @PathVariable id: Long,
+        @RequestParam(name = "sortBy", defaultValue = "finishTimeInSeconds") sortBy: String,
+        @RequestParam(name = "sortDir", defaultValue = "DESCENDING") sortDirection: SortDirection
     ): List<GetPlacementDto> {
-        return placementService.getCupPlacementsByRider(id)
+        return placementService.getCupPlacementsByRider(
+            riderId = id,
+            sortBy = sortBy,
+            sortDirection = sortDirection
+        )
     }
 
     @PutMapping

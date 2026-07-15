@@ -2,6 +2,7 @@ package com.xpromus.onebike_backend.team
 
 import com.xpromus.onebike_backend.team.dto.GetTeamDto
 import com.xpromus.onebike_backend.team.dto.PutTeamDto
+import com.xpromus.onebike_backend.util.SortDirection
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -11,8 +12,14 @@ class TeamController(
 ) {
 
     @GetMapping
-    fun getTeams(): List<GetTeamDto> {
-        return teamService.getTeams()
+    fun getTeams(
+        @RequestParam(name = "sortBy", defaultValue = "teamName") sortBy: String,
+        @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
+    ): List<GetTeamDto> {
+        return teamService.getTeams(
+            sortBy = sortBy,
+            sortDirection = sortDirection
+        )
     }
 
     @PutMapping

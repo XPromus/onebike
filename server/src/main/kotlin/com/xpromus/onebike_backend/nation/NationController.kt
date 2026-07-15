@@ -4,8 +4,8 @@ import com.xpromus.onebike_backend.nation.dto.GetNationDto
 import com.xpromus.onebike_backend.nation.dto.GetNationWithChildrenDto
 import com.xpromus.onebike_backend.nation.dto.PostNationExistsDto
 import com.xpromus.onebike_backend.nation.dto.PutNationDto
+import com.xpromus.onebike_backend.util.SortDirection
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -16,8 +16,14 @@ class NationController(
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getNations(): List<GetNationDto> {
-        return nationService.getNations()
+    fun getNations(
+        @RequestParam(name = "sortBy", defaultValue = "longName") sortBy: String,
+        @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
+    ): List<GetNationDto> {
+        return nationService.getNations(
+            sortBy = sortBy,
+            sortDirection = sortDirection
+        )
     }
 
     @PostMapping("/exists")

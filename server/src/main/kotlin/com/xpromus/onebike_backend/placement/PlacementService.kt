@@ -10,8 +10,11 @@ import com.xpromus.onebike_backend.race.Race
 import com.xpromus.onebike_backend.race.RaceRepository
 import com.xpromus.onebike_backend.rider.Rider
 import com.xpromus.onebike_backend.rider.RiderRepository
+import com.xpromus.onebike_backend.util.SortDirection
+import com.xpromus.onebike_backend.util.toSortDir
 import jakarta.persistence.EntityNotFoundException
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -22,18 +25,30 @@ class PlacementService(
 ) {
 
     fun getPlacementsByRace(
-        raceId: Long
+        raceId: Long,
+        sortBy: String,
+        sortDirection: SortDirection
     ): List<GetPlacementDto> {
         return placementRepository.findPlacementsByRaceId(
-            raceId = raceId
+            raceId = raceId,
+            sort = Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
         ).toGetPlacementDtoList()
     }
 
     fun getCupPlacementsByRider(
-        riderId: Long
+        riderId: Long,
+        sortBy: String,
+        sortDirection: SortDirection
     ): List<GetPlacementDto> {
         return placementRepository.getPlacementsByRiderId(
-            riderId = riderId
+            riderId = riderId,
+            sort = Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
         ).toGetPlacementDtoList()
     }
 

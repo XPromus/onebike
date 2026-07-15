@@ -14,6 +14,8 @@ import com.xpromus.onebike_backend.search.dto.PostSearchDto
 import com.xpromus.onebike_backend.team.TeamRepository
 import com.xpromus.onebike_backend.team.dto.GetTeamDto
 import com.xpromus.onebike_backend.team.mapper.toGetTeamDtoList
+import com.xpromus.onebike_backend.util.toSortDir
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -29,17 +31,33 @@ class SearchService(
     ): GetSearchDto {
         val riders: List<GetRiderDto> = riderRepository.findRidersByFirstNameLikeOrLastNameLike(
             firstName = postSearchDto.searchString,
-            lastName = postSearchDto.searchString
+            lastName = postSearchDto.searchString,
+            sort = Sort.by(
+                postSearchDto.sortDirection.toSortDir(),
+                postSearchDto.ridersSortBy
+            )
         ).toGetRiderDtoList()
         val cups: List<GetCupWithChildrenDto> = cupRepository.findCupsByCupNameLike(
-            cupName = postSearchDto.searchString
+            cupName = postSearchDto.searchString,
+            sort = Sort.by(
+                postSearchDto.sortDirection.toSortDir(),
+                postSearchDto.cupsSortBy
+            )
         ).toGetCupWithChildrenDtoList()
         val races: List<GetRaceDto> = raceRepository.findRacesByRaceNameLike(
-            raceName = postSearchDto.searchString
+            raceName = postSearchDto.searchString,
+            sort = Sort.by(
+                postSearchDto.sortDirection.toSortDir(),
+                postSearchDto.racesSortBy
+            )
         ).toGetRaceDtoList()
         val teams: List<GetTeamDto> = teamRepository.findTeamsByTeamNameLikeOrShortNameLike(
             teamName = postSearchDto.searchString,
-            shortName = postSearchDto.searchString
+            shortName = postSearchDto.searchString,
+            sort = Sort.by(
+                postSearchDto.sortDirection.toSortDir(),
+                postSearchDto.teamsSortBy
+            )
         ).toGetTeamDtoList()
 
         return GetSearchDto(

@@ -8,6 +8,8 @@ import com.xpromus.onebike_backend.nation.mapper.toEntity
 import com.xpromus.onebike_backend.nation.mapper.toGetDtoList
 import com.xpromus.onebike_backend.nation.mapper.toGetWithChildrenDto
 import com.xpromus.onebike_backend.nation.mapper.toNewEntity
+import com.xpromus.onebike_backend.util.SortDirection
+import com.xpromus.onebike_backend.util.toSortDir
 import jakarta.transaction.Transactional
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
@@ -17,11 +19,16 @@ class NationService(
     private val nationRepository: NationRepository
 ) {
 
-    fun getNations(): List<GetNationDto> {
-        val nations = nationRepository.findAll(
-            Sort.by("longName").ascending()
-        )
-        return nations.toGetDtoList()
+    fun getNations(
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetNationDto> {
+        return nationRepository.findAll(
+            Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetDtoList()
     }
 
     fun checkIfNationExists(

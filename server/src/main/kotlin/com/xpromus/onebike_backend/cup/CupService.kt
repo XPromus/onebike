@@ -7,8 +7,11 @@ import com.xpromus.onebike_backend.cup.mapper.toGetCupWithChildrenDto
 import com.xpromus.onebike_backend.cup.mapper.toGetCupWithChildrenDtoList
 import com.xpromus.onebike_backend.cup.mapper.toNewEntity
 import com.xpromus.onebike_backend.nation.NationRepository
+import com.xpromus.onebike_backend.util.SortDirection
+import com.xpromus.onebike_backend.util.toSortDir
 import jakarta.persistence.EntityNotFoundException
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,16 +19,44 @@ class CupService(
     private val cupRepository: CupRepository,
     private val nationRepository: NationRepository
 ) {
-    fun getAll(): List<GetCupWithChildrenDto> {
-        return cupRepository.findAll().toGetCupWithChildrenDtoList()
+    fun getAll(
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetCupWithChildrenDto> {
+        return cupRepository.findAll(
+            Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetCupWithChildrenDtoList()
     }
 
-    fun getCupsInNation(id: Long): List<GetCupWithChildrenDto> {
-        return cupRepository.findAllByNationId(id).toGetCupWithChildrenDtoList()
+    fun getCupsInNation(
+        id: Long,
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetCupWithChildrenDto> {
+        return cupRepository.findAllByNationId(
+            cupNationId = id,
+            sort = Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetCupWithChildrenDtoList()
     }
 
-    fun getCupsByName(name: String): List<GetCupWithChildrenDto> {
-        return cupRepository.findAllByCupNameLike(name).toGetCupWithChildrenDtoList()
+    fun getCupsByName(
+        name: String,
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetCupWithChildrenDto> {
+        return cupRepository.findAllByCupNameLike(
+            cupName = name,
+            sort = Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetCupWithChildrenDtoList()
     }
 
     @Transactional

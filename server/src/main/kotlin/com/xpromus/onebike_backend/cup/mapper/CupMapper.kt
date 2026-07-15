@@ -1,6 +1,7 @@
 package com.xpromus.onebike_backend.cup.mapper
 
 import com.xpromus.onebike_backend.cup.Cup
+import com.xpromus.onebike_backend.cup.dto.CupDescriptorDto
 import com.xpromus.onebike_backend.cup.dto.GetCupDto
 import com.xpromus.onebike_backend.cup.dto.GetCupWithChildrenDto
 import com.xpromus.onebike_backend.cup.dto.PutCupDto
@@ -36,6 +37,19 @@ fun Cup.toGetCupWithChildrenDto(): GetCupWithChildrenDto {
 fun List<Cup>.toGetCupWithChildrenDtoList(): List<GetCupWithChildrenDto> {
     return map {
         it.toGetCupWithChildrenDto()
+    }
+}
+
+fun Cup.toCupDescriptorDto(): CupDescriptorDto {
+    return CupDescriptorDto(
+        cupName = cupName,
+        url = url
+    )
+}
+
+fun List<Cup>.toCupDescriptorDtoList(): List<CupDescriptorDto> {
+    return map {
+        it.toCupDescriptorDto()
     }
 }
 

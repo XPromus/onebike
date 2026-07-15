@@ -3,13 +3,8 @@ package com.xpromus.onebike_backend.rider
 import com.xpromus.onebike_backend.rider.dto.GetRiderDto
 import com.xpromus.onebike_backend.rider.dto.GetRiderWithChildrenDto
 import com.xpromus.onebike_backend.rider.dto.PutRiderDto
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.RequestMapping
+import com.xpromus.onebike_backend.util.SortDirection
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/riders")
@@ -18,13 +13,25 @@ class RiderController(
 ) {
 
     @GetMapping
-    fun getRiders(): List<GetRiderDto> {
-        return riderService.getRiders()
+    fun getRiders(
+        @RequestParam(name = "sortBy", defaultValue = "lastName") sortBy: String,
+        @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
+    ): List<GetRiderDto> {
+        return riderService.getRiders(
+            sortBy = sortBy,
+            sortDirection = sortDirection
+        )
     }
 
     @GetMapping("/full")
-    fun getRidersWithChildren(): List<GetRiderWithChildrenDto> {
-        return riderService.getRidersWithChildren()
+    fun getRidersWithChildren(
+        @RequestParam(name = "sortBy", defaultValue = "lastName") sortBy: String,
+        @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
+    ): List<GetRiderWithChildrenDto> {
+        return riderService.getRidersWithChildren(
+            sortBy = sortBy,
+            sortDirection = sortDirection
+        )
     }
 
     @PutMapping

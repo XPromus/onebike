@@ -9,8 +9,11 @@ import com.xpromus.onebike_backend.rider.mapper.toGetRiderDto
 import com.xpromus.onebike_backend.rider.mapper.toGetRiderDtoList
 import com.xpromus.onebike_backend.rider.mapper.toGetRiderWithChildrenDtoList
 import com.xpromus.onebike_backend.rider.mapper.toNewEntity
+import com.xpromus.onebike_backend.util.SortDirection
+import com.xpromus.onebike_backend.util.toSortDir
 import jakarta.persistence.EntityNotFoundException
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,12 +22,28 @@ class RiderService(
     private val nationRepository: NationRepository
 ) {
 
-    fun getRiders(): List<GetRiderDto> {
-        return riderRepository.findAll().toGetRiderDtoList()
+    fun getRiders(
+        sortDirection: SortDirection,
+        sortBy: String
+    ): List<GetRiderDto> {
+        return riderRepository.findAll(
+            Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetRiderDtoList()
     }
 
-    fun getRidersWithChildren(): List<GetRiderWithChildrenDto> {
-        return riderRepository.findAll().toGetRiderWithChildrenDtoList()
+    fun getRidersWithChildren(
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetRiderWithChildrenDto> {
+        return riderRepository.findAll(
+            Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetRiderWithChildrenDtoList()
     }
 
     @Transactional

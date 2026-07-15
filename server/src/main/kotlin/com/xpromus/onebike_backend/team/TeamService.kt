@@ -8,8 +8,11 @@ import com.xpromus.onebike_backend.team.mapper.toEntity
 import com.xpromus.onebike_backend.team.mapper.toGetTeamDto
 import com.xpromus.onebike_backend.team.mapper.toGetTeamDtoList
 import com.xpromus.onebike_backend.team.mapper.toNewEntity
+import com.xpromus.onebike_backend.util.SortDirection
+import com.xpromus.onebike_backend.util.toSortDir
 import jakarta.persistence.EntityNotFoundException
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,8 +21,16 @@ class TeamService(
     private val nationRepository: NationRepository
 ) {
 
-    fun getTeams(): List<GetTeamDto> {
-        return teamRepository.findAll().toGetTeamDtoList()
+    fun getTeams(
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetTeamDto> {
+        return teamRepository.findAll(
+            Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetTeamDtoList()
     }
 
     @Transactional
