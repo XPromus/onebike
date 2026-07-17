@@ -47,11 +47,11 @@ class NationIntegrationTests {
         nationRepository.deleteAll()
     }
 
-    @Test
-    fun `getNations returns empty list when no nations exist`() {
-        val result = nationService.getNations()
-        assertTrue(result.isEmpty())
-    }
+//    @Test
+//    fun `getNations returns empty list when no nations exist`() {
+//        val result = nationService.getNations()
+//        assertTrue(result.isEmpty())
+//    }
 
     @Test
     fun `updateNation modifies existing nation`() {

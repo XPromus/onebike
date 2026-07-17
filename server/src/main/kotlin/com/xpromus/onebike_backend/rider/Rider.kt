@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
+import java.time.LocalDate
 
 @Entity(name = "rider")
 @Table(name = "riders")
@@ -27,6 +28,9 @@ class Rider(
 
     @Column(nullable = false)
     var lastName: String = "",
+
+    @Column(nullable = false)
+    var dateOfBirth: LocalDate = LocalDate.now(),
 
     @OneToMany(
         mappedBy = "rider",

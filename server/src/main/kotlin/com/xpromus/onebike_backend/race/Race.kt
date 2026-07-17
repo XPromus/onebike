@@ -14,6 +14,9 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
+import org.springframework.cglib.core.Local
+import java.time.Instant
+import java.time.LocalDate
 
 @Entity(name = "race")
 @Table(name = "races")
@@ -27,6 +30,12 @@ class Race(
 
     @Column(nullable = false)
     var lengthInKm: Float = 0.0f,
+
+    @Column(nullable = false)
+    var raceDate: LocalDate = LocalDate.now(),
+
+    @Column(nullable = false)
+    var startTime: Instant = Instant.now(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nation_id")

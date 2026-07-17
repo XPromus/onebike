@@ -2,12 +2,14 @@ package com.xpromus.onebike_backend.race
 
 import com.xpromus.onebike_backend.race.dto.GetRaceDto
 import com.xpromus.onebike_backend.race.dto.PutRaceDto
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 
 @RestController
 @RequestMapping("/races")
@@ -16,11 +18,13 @@ class RaceController(
 ) {
 
     @GetMapping
+    @ResponseStatus(value = HttpStatus.OK)
     fun getAllRaces(): List<GetRaceDto> {
         return raceService.getAllRaces()
     }
 
     @PutMapping
+    @ResponseStatus(value = HttpStatus.OK)
     fun putRace(
         putRaceDto: PutRaceDto
     ): GetRaceDto {
@@ -28,6 +32,7 @@ class RaceController(
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun deleteRace(
         @PathVariable id: Long
     ) {

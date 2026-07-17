@@ -13,6 +13,7 @@ fun Rider.toGetRiderDto(): GetRiderDto {
         id = id!!,
         firstName = firstName,
         lastName = lastName,
+        dateOfBirth = dateOfBirth,
         placementIDs = placements.map { it.id!! },
         nationId = nation.id!!
     )
@@ -27,6 +28,7 @@ fun Rider.toGetRiderWithChildrenDto(): GetRiderWithChildrenDto {
         id = id!!,
         firstName = firstName,
         lastName = lastName,
+        dateOfBirth = dateOfBirth,
         nation = nation.toNationDescriptorDto(),
         team = team?.toTeamDescriptorDto()
     )
@@ -46,6 +48,7 @@ fun PutRiderDto.toEntity(
         id = original.id,
         firstName = firstName,
         lastName = lastName,
+        dateOfBirth = dateOfBirth,
         placements = original.placements,
         nation = nation
     )
@@ -57,6 +60,7 @@ fun PutRiderDto.toNewEntity(
     return Rider(
         firstName = firstName,
         lastName = lastName,
+        dateOfBirth = dateOfBirth,
         nation = nation
     )
 }

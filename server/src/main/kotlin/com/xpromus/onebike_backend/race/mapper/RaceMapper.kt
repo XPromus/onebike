@@ -5,12 +5,16 @@ import com.xpromus.onebike_backend.nation.Nation
 import com.xpromus.onebike_backend.race.Race
 import com.xpromus.onebike_backend.race.dto.GetRaceDto
 import com.xpromus.onebike_backend.race.dto.PutRaceDto
+import java.time.Instant
+import java.time.LocalDate
 
 fun Race.toGetRaceDto(): GetRaceDto {
     return GetRaceDto(
         id = id!!,
         raceName = raceName,
         lengthInKm = lengthInKm,
+        raceDate = raceDate,
+        startTime = startTime,
         countryId = nation.id!!,
         cupId = cup?.let { it.id!! },
         placementIds = placements.map {
@@ -32,6 +36,8 @@ fun PutRaceDto.toEntity(
         id = original.id,
         raceName = raceName,
         lengthInKm = lengthInKm,
+        raceDate = raceDate,
+        startTime = startTime,
         nation = nation,
         cup = cup,
         placements = original.placements
@@ -45,6 +51,8 @@ fun PutRaceDto.toNewEntity(
     return Race(
         raceName = raceName,
         lengthInKm = lengthInKm,
+        raceDate = raceDate,
+        startTime = startTime,
         nation = nation,
         cup = cup,
     )

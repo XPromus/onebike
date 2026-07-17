@@ -26,5 +26,5 @@ class Cup(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nation_id", nullable = false)
-    var nation: Nation,
+    var nation: Nation = Nation(),
 )
