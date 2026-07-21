@@ -1,8 +1,10 @@
 package com.xpromus.onebike_backend.placement
 
 import com.xpromus.onebike_backend.placement.dto.GetPlacementDto
+import com.xpromus.onebike_backend.placement.dto.GetPlacementWithChildrenDto
 import com.xpromus.onebike_backend.placement.dto.PutPlacementDto
 import com.xpromus.onebike_backend.util.SortDirection
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -12,6 +14,7 @@ class PlacementController(
 ) {
 
     @GetMapping("/race/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
     fun getPlacementsByRace(
         @PathVariable id: Long,
         @RequestParam(name = "sortBy", defaultValue = "finishTimeInSeconds") sortBy: String,
@@ -24,7 +27,22 @@ class PlacementController(
         )
     }
 
+    @GetMapping("/race/{id}/full")
+    @ResponseStatus(value = HttpStatus.OK)
+    fun getPlacementsByRaceWithChildren(
+        @PathVariable id: Long,
+        @RequestParam(name = "sortBy", defaultValue = "finishTimeInSeconds") sortBy: String,
+        @RequestParam(name = "sortDir", defaultValue = "DESCENDING") sortDirection: SortDirection
+    ): List<GetPlacementWithChildrenDto> {
+        return placementService.getPlacementsByRaceWithChildren(
+            raceId = id,
+            sortBy = sortBy,
+            sortDirection = sortDirection
+        )
+    }
+
     @GetMapping("/rider/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
     fun getPlacementsByRider(
         @PathVariable id: Long,
         @RequestParam(name = "sortBy", defaultValue = "finishTimeInSeconds") sortBy: String,
@@ -37,7 +55,22 @@ class PlacementController(
         )
     }
 
+    @GetMapping("/rider/{id}/full")
+    @ResponseStatus(value = HttpStatus.OK)
+    fun getPlacementsByRiderWithChildren(
+        @PathVariable id: Long,
+        @RequestParam(name = "sortBy", defaultValue = "finishTimeInSeconds") sortBy: String,
+        @RequestParam(name = "sortDir", defaultValue = "DESCENDING") sortDirection: SortDirection
+    ): List<GetPlacementWithChildrenDto> {
+        return placementService.getCupPlacementsByRiderWithChildren(
+            riderId = id,
+            sortBy = sortBy,
+            sortDirection = sortDirection
+        )
+    }
+
     @PutMapping
+    @ResponseStatus(value = HttpStatus.OK)
     fun putPlacement(
         putPlacementDto: PutPlacementDto
     ): GetPlacementDto {
@@ -45,6 +78,7 @@ class PlacementController(
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun deletePlacement(
         @PathVariable id: Long
     ) {

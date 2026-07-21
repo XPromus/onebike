@@ -6,13 +6,16 @@ import com.xpromus.onebike_backend.cup.dto.GetCupDto
 import com.xpromus.onebike_backend.cup.dto.GetCupWithChildrenDto
 import com.xpromus.onebike_backend.cup.dto.PutCupDto
 import com.xpromus.onebike_backend.nation.Nation
+import com.xpromus.onebike_backend.nation.mapper.toNationDescriptorDto
+import com.xpromus.onebike_backend.race.mapper.toRaceDescriptorDtoList
 
 fun Cup.toGetCupDto(): GetCupDto {
     return GetCupDto(
         id = id!!,
         cupName = cupName,
         url = url,
-        cupNationId = nation.id!!
+        raceIds = races.map { it.id!! },
+        nationId = nation.id!!,
     )
 }
 
@@ -27,10 +30,8 @@ fun Cup.toGetCupWithChildrenDto(): GetCupWithChildrenDto {
         id = id!!,
         cupName = cupName,
         url = url,
-        raceIds = races.map {
-            it.id!!
-        },
-        cupNationId = nation.id!!
+        races = races.toRaceDescriptorDtoList(),
+        nation = nation.toNationDescriptorDto(),
     )
 }
 
@@ -42,6 +43,7 @@ fun List<Cup>.toGetCupWithChildrenDtoList(): List<GetCupWithChildrenDto> {
 
 fun Cup.toCupDescriptorDto(): CupDescriptorDto {
     return CupDescriptorDto(
+        id = id!!,
         cupName = cupName,
         url = url
     )

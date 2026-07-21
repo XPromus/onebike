@@ -1,10 +1,12 @@
 package com.xpromus.onebike_backend.placement
 
 import com.xpromus.onebike_backend.placement.dto.GetPlacementDto
+import com.xpromus.onebike_backend.placement.dto.GetPlacementWithChildrenDto
 import com.xpromus.onebike_backend.placement.dto.PutPlacementDto
 import com.xpromus.onebike_backend.placement.mapper.toEntity
 import com.xpromus.onebike_backend.placement.mapper.toGetPlacementDto
 import com.xpromus.onebike_backend.placement.mapper.toGetPlacementDtoList
+import com.xpromus.onebike_backend.placement.mapper.toGetPlacementWithChildrenDtoList
 import com.xpromus.onebike_backend.placement.mapper.toNewEntity
 import com.xpromus.onebike_backend.race.Race
 import com.xpromus.onebike_backend.race.RaceRepository
@@ -13,9 +15,9 @@ import com.xpromus.onebike_backend.rider.RiderRepository
 import com.xpromus.onebike_backend.util.SortDirection
 import com.xpromus.onebike_backend.util.toSortDir
 import jakarta.persistence.EntityNotFoundException
-import jakarta.transaction.Transactional
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PlacementService(
@@ -38,6 +40,21 @@ class PlacementService(
         ).toGetPlacementDtoList()
     }
 
+    @Transactional(readOnly = true)
+    fun getPlacementsByRaceWithChildren(
+        raceId: Long,
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetPlacementWithChildrenDto> {
+        return placementRepository.findPlacementsByRaceId(
+            raceId = raceId,
+            sort = Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetPlacementWithChildrenDtoList()
+    }
+
     fun getCupPlacementsByRider(
         riderId: Long,
         sortBy: String,
@@ -50,6 +67,21 @@ class PlacementService(
                 sortBy
             )
         ).toGetPlacementDtoList()
+    }
+
+    @Transactional(readOnly = true)
+    fun getCupPlacementsByRiderWithChildren(
+        riderId: Long,
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetPlacementWithChildrenDto> {
+        return placementRepository.getPlacementsByRiderId(
+            riderId = riderId,
+            sort = Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetPlacementWithChildrenDtoList()
     }
 
     @Transactional

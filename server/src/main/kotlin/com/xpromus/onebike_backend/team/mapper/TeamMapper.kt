@@ -1,8 +1,11 @@
 package com.xpromus.onebike_backend.team.mapper
 
 import com.xpromus.onebike_backend.nation.Nation
+import com.xpromus.onebike_backend.nation.mapper.toNationDescriptorDto
+import com.xpromus.onebike_backend.rider.mapper.toRiderDescriptorDto
 import com.xpromus.onebike_backend.team.Team
 import com.xpromus.onebike_backend.team.dto.GetTeamDto
+import com.xpromus.onebike_backend.team.dto.GetTeamWithChildrenDto
 import com.xpromus.onebike_backend.team.dto.PutTeamDto
 import com.xpromus.onebike_backend.team.dto.TeamDescriptorDto
 
@@ -23,8 +26,26 @@ fun List<Team>.toGetTeamDtoList(): List<GetTeamDto> {
     }
 }
 
+fun Team.toGetTeamWithChildrenDto(): GetTeamWithChildrenDto {
+    return GetTeamWithChildrenDto(
+        id = id!!,
+        teamName = teamName,
+        shortName = shortName,
+        teamDescription = teamDescription,
+        nation = nationality.toNationDescriptorDto(),
+        riders = riders.map { it.toRiderDescriptorDto() }
+    )
+}
+
+fun List<Team>.toGetTeamWithChildrenDtoList(): List<GetTeamWithChildrenDto> {
+    return map {
+        it.toGetTeamWithChildrenDto()
+    }
+}
+
 fun Team.toTeamDescriptorDto(): TeamDescriptorDto {
     return TeamDescriptorDto(
+        id = id!!,
         teamName = teamName,
         shortName = shortName,
         teamDescription = teamDescription

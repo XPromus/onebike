@@ -4,6 +4,7 @@ import com.xpromus.onebike_backend.rider.dto.GetRiderDto
 import com.xpromus.onebike_backend.rider.dto.GetRiderWithChildrenDto
 import com.xpromus.onebike_backend.rider.dto.PutRiderDto
 import com.xpromus.onebike_backend.util.SortDirection
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -13,6 +14,7 @@ class RiderController(
 ) {
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     fun getRiders(
         @RequestParam(name = "sortBy", defaultValue = "lastName") sortBy: String,
         @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
@@ -24,6 +26,7 @@ class RiderController(
     }
 
     @GetMapping("/full")
+    @ResponseStatus(HttpStatus.OK)
     fun getRidersWithChildren(
         @RequestParam(name = "sortBy", defaultValue = "lastName") sortBy: String,
         @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
@@ -35,6 +38,7 @@ class RiderController(
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
     fun putRider(
         @RequestBody putRiderDto: PutRiderDto
     ): GetRiderDto {
@@ -42,6 +46,7 @@ class RiderController(
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteRider(
         @PathVariable id: Long
     ) {

@@ -4,5 +4,6 @@ data class GetCupDto(
     val id: Long,
     val cupName: String,
     val url: String?,
-    val cupNationId: Long
+    val raceIds: List<Long>,
+    val nationId: Long,
 )

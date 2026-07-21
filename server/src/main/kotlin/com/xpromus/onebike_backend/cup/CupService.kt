@@ -1,8 +1,10 @@
 package com.xpromus.onebike_backend.cup
 
+import com.xpromus.onebike_backend.cup.dto.GetCupDto
 import com.xpromus.onebike_backend.cup.dto.GetCupWithChildrenDto
 import com.xpromus.onebike_backend.cup.dto.PutCupDto
 import com.xpromus.onebike_backend.cup.mapper.toEntity
+import com.xpromus.onebike_backend.cup.mapper.toGetCupDtoList
 import com.xpromus.onebike_backend.cup.mapper.toGetCupWithChildrenDto
 import com.xpromus.onebike_backend.cup.mapper.toGetCupWithChildrenDtoList
 import com.xpromus.onebike_backend.cup.mapper.toNewEntity
@@ -10,16 +12,30 @@ import com.xpromus.onebike_backend.nation.NationRepository
 import com.xpromus.onebike_backend.util.SortDirection
 import com.xpromus.onebike_backend.util.toSortDir
 import jakarta.persistence.EntityNotFoundException
-import jakarta.transaction.Transactional
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class CupService(
     private val cupRepository: CupRepository,
     private val nationRepository: NationRepository
 ) {
-    fun getAll(
+
+    fun getCups(
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetCupDto> {
+        return cupRepository.findAll(
+            Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetCupDtoList()
+    }
+
+    @Transactional(readOnly = true)
+    fun getCupWithChildren(
         sortBy: String,
         sortDirection: SortDirection
     ): List<GetCupWithChildrenDto> {
@@ -31,6 +47,7 @@ class CupService(
         ).toGetCupWithChildrenDtoList()
     }
 
+    @Transactional(readOnly = true)
     fun getCupsInNation(
         id: Long,
         sortBy: String,
@@ -45,6 +62,7 @@ class CupService(
         ).toGetCupWithChildrenDtoList()
     }
 
+    @Transactional(readOnly = true)
     fun getCupsByName(
         name: String,
         sortBy: String,
@@ -65,7 +83,7 @@ class CupService(
     ): GetCupWithChildrenDto {
         val targetNation = nationRepository
             .findById(
-                putCupDto.cupNationId
+                putCupDto.nationId
             ).orElseThrow {
                 EntityNotFoundException()
             }
@@ -92,5 +110,6 @@ class CupService(
     fun deleteCup(id: Long) {
         cupRepository.deleteById(id)
     }
+
 
 }

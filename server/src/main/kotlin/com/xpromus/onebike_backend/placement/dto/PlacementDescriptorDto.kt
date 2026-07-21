@@ -1,10 +1,9 @@
 package com.xpromus.onebike_backend.placement.dto
 
-data class PutPlacementDto(
-    val id: Long?,
+data class PlacementDescriptorDto(
+    val id: Long,
     val points: Int,
     val finishTimeInSeconds: Int,
     val finishStatus: String,
-    val targetRiderId: Long,
-    val targetRaceId: Long,
+    val raceId: Long,
 )

@@ -5,14 +5,19 @@ import com.xpromus.onebike_backend.cup.CupRepository
 import com.xpromus.onebike_backend.nation.Nation
 import com.xpromus.onebike_backend.nation.NationRepository
 import com.xpromus.onebike_backend.race.dto.GetRaceDto
+import com.xpromus.onebike_backend.race.dto.GetRaceWithChildrenDto
 import com.xpromus.onebike_backend.race.dto.PutRaceDto
 import com.xpromus.onebike_backend.race.mapper.toEntity
 import com.xpromus.onebike_backend.race.mapper.toGetRaceDto
 import com.xpromus.onebike_backend.race.mapper.toGetRaceDtoList
+import com.xpromus.onebike_backend.race.mapper.toGetRaceWithChildrenDtoList
 import com.xpromus.onebike_backend.race.mapper.toNewEntity
+import com.xpromus.onebike_backend.util.SortDirection
+import com.xpromus.onebike_backend.util.toSortDir
 import jakarta.persistence.EntityNotFoundException
-import jakarta.transaction.Transactional
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class RaceService(
@@ -21,8 +26,30 @@ class RaceService(
     private val cupRepository: CupRepository
 ) {
 
-    fun getAllRaces(): List<GetRaceDto> {
-        return raceRepository.findAll().toGetRaceDtoList()
+    @Transactional(readOnly = true)
+    fun getAllRaces(
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetRaceDto> {
+        return raceRepository.findAll(
+            Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetRaceDtoList()
+    }
+
+    @Transactional(readOnly = true)
+    fun getRacesWithChildren(
+        sortBy: String,
+        sortDirection: SortDirection
+    ): List<GetRaceWithChildrenDto> {
+        return raceRepository.findAll(
+            Sort.by(
+                sortDirection.toSortDir(),
+                sortBy
+            )
+        ).toGetRaceWithChildrenDtoList()
     }
 
     @Transactional

@@ -39,6 +39,7 @@ fun List<Nation>.toGetWithChildrenDtoList(): List<GetNationWithChildrenDto> = ma
 
 fun Nation.toNationDescriptorDto(): NationDescriptorDto {
     return NationDescriptorDto(
+        id = id!!,
         longName = longName,
         shortName = shortName,
         flagEmoji = flagEmoji

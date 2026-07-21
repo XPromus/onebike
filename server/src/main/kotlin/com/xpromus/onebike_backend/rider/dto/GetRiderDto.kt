@@ -8,5 +8,6 @@ data class GetRiderDto(
     val lastName: String,
     val dateOfBirth: LocalDate,
     val placementIDs: List<Long>,
-    val nationId: Long
+    val nationId: Long,
+    val teamId: Long?
 )
