@@ -1,7 +1,7 @@
 import { fail, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { postCheckIfNationExists, putNation } from '$lib/server/api/nation';
-import type { PostNationExistsDto, PutNationDto } from '$lib/api/types/nations';
+import type { PostNationExistsDto, PutNationDto } from '$lib/types/server/nation.types';
 
 export const PUT: RequestHandler = async ({
     request, fetch

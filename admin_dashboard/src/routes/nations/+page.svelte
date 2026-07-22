@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Nation } from "$lib/types/nations";
-	import NationEdit from "$lib/components/NationEdit.svelte";
+	import NationEdit from "$lib/components/edit/NationEdit.svelte";
 	import NationEntry from "$lib/components/NationEntry.svelte";
+	import type { Nation } from "$lib/types/client/nation.types";
 	import { type PageData } from "./$types";
 	
     let { data }: { data: PageData } = $props();

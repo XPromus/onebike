@@ -9,7 +9,7 @@ data class GetRaceDto(
     val lengthInKm: Float,
     val raceDate: LocalDate,
     val startTime: Instant,
-    val countryId: Long,
+    val nationId: Long,
     val cupId: Long?,
     val placementIds: List<Long>,
 )

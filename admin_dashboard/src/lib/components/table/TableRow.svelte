@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { EntityContent } from "$lib/types/entity";
 	import type { Snippet } from "svelte";
 
     let {

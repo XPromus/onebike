@@ -89,12 +89,12 @@ class PlacementService(
         putPlacementDto: PutPlacementDto
     ): GetPlacementDto {
         val targetRace: Race = raceRepository
-            .findById(putPlacementDto.targetRaceId)
+            .findById(putPlacementDto.raceId)
             .orElseThrow {
                 EntityNotFoundException()
             }
         val targetRider: Rider = riderRepository
-            .findById(putPlacementDto.targetRiderId)
+            .findById(putPlacementDto.riderId)
             .orElseThrow {
                 EntityNotFoundException()
             }

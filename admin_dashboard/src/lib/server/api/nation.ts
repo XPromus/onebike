@@ -1,5 +1,6 @@
-import type { Nation, PostNationExistsDto, PutNationDto } from "$lib/types/nations";
 import { env } from "$env/dynamic/private";
+import type { Nation } from "$lib/types/client/nation.types";
+import type { PutNationDto, PostNationExistsDto } from "$lib/types/server/nation.types";
 
 const getURL = (path: string): string => {
     return `${env.API_BASE_URL}${path}`;

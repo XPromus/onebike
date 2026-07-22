@@ -5,6 +5,6 @@ data class PutPlacementDto(
     val points: Int,
     val finishTimeInSeconds: Int,
     val finishStatus: String,
-    val targetRiderId: Long,
-    val targetRaceId: Long,
+    val riderId: Long,
+    val raceId: Long,
 )

@@ -17,7 +17,7 @@ fun Rider.toGetRiderDto(): GetRiderDto {
         firstName = firstName,
         lastName = lastName,
         dateOfBirth = dateOfBirth,
-        placementIDs = placements.map { it.id!! },
+        placementIds = placements.map { it.id!! },
         nationId = nation.id!!,
         teamId = team?.id!!
     )

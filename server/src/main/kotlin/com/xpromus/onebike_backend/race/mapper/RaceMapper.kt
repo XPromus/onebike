@@ -18,7 +18,7 @@ fun Race.toGetRaceDto(): GetRaceDto {
         lengthInKm = lengthInKm,
         raceDate = raceDate,
         startTime = startTime,
-        countryId = nation.id!!,
+        nationId = nation.id!!,
         cupId = cup?.let { it.id!! },
         placementIds = placements.map {
             it.id!!

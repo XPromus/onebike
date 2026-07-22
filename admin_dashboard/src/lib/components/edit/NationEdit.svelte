@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { invalidateAll } from "$app/navigation";
-	import type { Nation, NationEditDto, PutNationDto } from "$lib/api/types/nations.d.ts";
 	import Icon from "@iconify/svelte";
-	import AddButton from "./Button.svelte";
-	import AddDialog from "./AddDialog.svelte";
+	import AddButton from "../Button.svelte";
+	import AddDialog from "../AddDialog.svelte";
 	import { onMount } from "svelte";
+	import type { Nation, NationEditDto } from "$lib/types/client/nation.types";
+	import type { PutNationDto } from "$lib/types/server/nation.types";
 
     let {
         selectedNation
@@ -14,7 +15,7 @@
 
     let submitError = $state<string | null>(null);
     let nation = $derived<NationEditDto>({
-        id: selectedNation != null ? selectedNation.id : null,
+        id: selectedNation != undefined ? selectedNation.id : undefined,
         longName: selectedNation != null ? selectedNation.longName : "",
         shortName: selectedNation != null ? selectedNation.shortName: "",
         flagEmoji: selectedNation != null ? selectedNation.flagEmoji: ""
@@ -84,7 +85,7 @@
         </AddButton>
     </div>
     <div class="flex flex-row space-x-2">
-        <AddDialog bind:nationEdit={nation} />
+        <AddDialog bind:targetNation={nation} />
         <AddButton onclick={handleClear} tooltip="Clear" class="rounded-md">
             <Icon icon="material-symbols:clear-all"/>
         </AddButton>
