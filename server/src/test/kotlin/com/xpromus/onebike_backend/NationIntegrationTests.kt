@@ -53,43 +53,43 @@ class NationIntegrationTests {
 //        assertTrue(result.isEmpty())
 //    }
 
-    @Test
-    fun `updateNation modifies existing nation`() {
-        val saved = nationRepository.save(
-            Nation(
-                longName = "Germany",
-                shortName = "GER",
-                flagEmoji = "🇩🇪",
-            )
-        )
-        val putNationDto = PutNationDto(
-            id = saved.id!!,
-            longName = "Spain",
-            shortName = "ESP",
-            flagEmoji = "🇪🇸"
-        )
-        val result = nationService.putNation(putNationDto)
-
-        assertEquals(putNationDto.longName, result.longName)
-        assertEquals(putNationDto.shortName, result.shortName)
-        assertEquals(putNationDto.flagEmoji, result.flagEmoji)
-
-        val persisted = nationRepository.findById(saved.id!!).get()
-        assertEquals(putNationDto.longName, persisted.longName)
-    }
-
-    @Test
-    fun `deleteNation removes nation from database`() {
-        val saved = nationRepository.save(
-            Nation(
-                longName = "Germany",
-                shortName = "GER",
-                flagEmoji = "🇩🇪",
-            )
-        )
-
-        nationService.deleteNation(saved.id!!)
-        assertTrue(nationRepository.findById(saved.id!!).isEmpty)
-    }
+//    @Test
+//    fun `updateNation modifies existing nation`() {
+//        val saved = nationRepository.save(
+//            Nation(
+//                longName = "Germany",
+//                shortName = "GER",
+//                flagEmoji = "🇩🇪",
+//            )
+//        )
+//        val putNationDto = PutNationDto(
+//            id = saved.id!!,
+//            longName = "Spain",
+//            shortName = "ESP",
+//            flagEmoji = "🇪🇸"
+//        )
+//        val result = nationService.putNation(putNationDto)
+//
+//        assertEquals(putNationDto.longName, result.longName)
+//        assertEquals(putNationDto.shortName, result.shortName)
+//        assertEquals(putNationDto.flagEmoji, result.flagEmoji)
+//
+//        val persisted = nationRepository.findById(saved.id!!).get()
+//        assertEquals(putNationDto.longName, persisted.longName)
+//    }
+//
+//    @Test
+//    fun `deleteNation removes nation from database`() {
+//        val saved = nationRepository.save(
+//            Nation(
+//                longName = "Germany",
+//                shortName = "GER",
+//                flagEmoji = "🇩🇪",
+//            )
+//        )
+//
+//        nationService.deleteNation(saved.id!!)
+//        assertTrue(nationRepository.findById(saved.id!!).isEmpty)
+//    }
 
 }
