@@ -77,7 +77,7 @@ class NationController(
         @Valid @RequestBody postNationDto: PostNationDto
     ): ResponseEntity<GetNationDto> {
         val savedNation = nationService.createNation(postNationDto)
-        val location = URI.create("/nations/${savedNation.id}")
+        val location = URI.create("/api/v1/nations/${savedNation.id}")
         return ResponseEntity.created(location).body(savedNation)
     }
 

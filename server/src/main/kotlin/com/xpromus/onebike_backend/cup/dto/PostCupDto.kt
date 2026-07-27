@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
 
-data class PutCupDto(
+data class PostCupDto(
     @field:Size(
         min = CupValidation.CUP_NAME_MIN,
         max = CupValidation.CUP_NAME_MAX,

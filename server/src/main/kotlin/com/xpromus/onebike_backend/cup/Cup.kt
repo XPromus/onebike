@@ -20,7 +20,8 @@ class Cup(
     @OneToMany(
         mappedBy = "cup",
         cascade = [CascadeType.ALL],
-        orphanRemoval = true
+        orphanRemoval = true,
+        fetch = FetchType.LAZY,
     )
     var races: MutableList<Race> = mutableListOf(),
 

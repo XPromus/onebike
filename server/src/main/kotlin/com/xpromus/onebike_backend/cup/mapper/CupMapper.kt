@@ -1,44 +1,35 @@
 package com.xpromus.onebike_backend.cup.mapper
 
 import com.xpromus.onebike_backend.cup.Cup
-import com.xpromus.onebike_backend.cup.dto.CupDescriptorDto
-import com.xpromus.onebike_backend.cup.dto.GetCupDto
-import com.xpromus.onebike_backend.cup.dto.GetCupWithChildrenDto
-import com.xpromus.onebike_backend.cup.dto.PutCupDto
+import com.xpromus.onebike_backend.cup.dto.*
 import com.xpromus.onebike_backend.nation.Nation
-import com.xpromus.onebike_backend.nation.mapper.toNationDescriptorDto
-import com.xpromus.onebike_backend.race.mapper.toRaceDescriptorDtoList
+import com.xpromus.onebike_backend.nation.dto.NationDescriptorDto
+import com.xpromus.onebike_backend.race.dto.RaceDescriptorDto
 
-fun Cup.toGetCupDto(): GetCupDto {
+fun Cup.toGetCupDto(
+    raceIds: List<Long>,
+    nationId: Long,
+): GetCupDto {
     return GetCupDto(
         id = id!!,
         cupName = cupName,
         url = url,
-        raceIds = races.map { it.id!! },
-        nationId = nation.id!!,
+        raceIds = raceIds,
+        nationId = nationId,
     )
 }
 
-fun List<Cup>.toGetCupDtoList(): List<GetCupDto> {
-    return map {
-        it.toGetCupDto()
-    }
-}
-
-fun Cup.toGetCupWithChildrenDto(): GetCupWithChildrenDto {
+fun Cup.toGetCupWithChildrenDto(
+    races: List<RaceDescriptorDto>,
+    nation: NationDescriptorDto
+): GetCupWithChildrenDto {
     return GetCupWithChildrenDto(
         id = id!!,
         cupName = cupName,
         url = url,
-        races = races.toRaceDescriptorDtoList(),
-        nation = nation.toNationDescriptorDto(),
+        races = races,
+        nation = nation,
     )
-}
-
-fun List<Cup>.toGetCupWithChildrenDtoList(): List<GetCupWithChildrenDto> {
-    return map {
-        it.toGetCupWithChildrenDto()
-    }
 }
 
 fun Cup.toCupDescriptorDto(): CupDescriptorDto {
@@ -49,12 +40,6 @@ fun Cup.toCupDescriptorDto(): CupDescriptorDto {
     )
 }
 
-fun List<Cup>.toCupDescriptorDtoList(): List<CupDescriptorDto> {
-    return map {
-        it.toCupDescriptorDto()
-    }
-}
-
 fun PutCupDto.toEntity(
     originalCup: Cup,
     nation: Nation
@@ -62,6 +47,7 @@ fun PutCupDto.toEntity(
     return Cup(
         id = originalCup.id,
         cupName = cupName,
+        url = url,
         races = originalCup.races,
         nation = nation
     )
@@ -72,6 +58,17 @@ fun PutCupDto.toNewEntity(
 ): Cup {
     return Cup(
         cupName = cupName,
-        nation = nation
+        url = url,
+        nation = nation,
+    )
+}
+
+fun PostCupDto.toNewEntity(
+    nation: Nation
+): Cup {
+    return Cup(
+        cupName = cupName,
+        url = url,
+        nation = nation,
     )
 }

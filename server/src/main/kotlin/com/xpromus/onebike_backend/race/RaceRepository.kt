@@ -17,4 +17,14 @@ interface RaceRepository : JpaRepository<Race, Long> {
         @Param("nationIds") nationIds: Collection<Long>
     ): List<Array<Any>>
 
+    @Query("SELECT ra.cup.id, ra.id FROM race ra WHERE ra.cup.id IN :cupIds")
+    fun findIdsByCupIds(
+        @Param("cupIds") cupIds: Collection<Long>
+    ): List<Array<Any>>
+
+    @Query("SELECT ra.cup.id, ra FROM race ra WHERE ra.cup.id IN :cupIds")
+    fun findByCupIds(
+        @Param("cupIds") cupIds: Collection<Long>
+    ): List<Array<Any>>
+
 }
