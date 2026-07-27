@@ -4,6 +4,7 @@ import com.xpromus.onebike_backend.nation.Nation
 import com.xpromus.onebike_backend.nation.dto.GetNationDto
 import com.xpromus.onebike_backend.nation.dto.GetNationWithChildrenDto
 import com.xpromus.onebike_backend.nation.dto.NationDescriptorDto
+import com.xpromus.onebike_backend.nation.dto.PostNationDto
 import com.xpromus.onebike_backend.nation.dto.PutNationDto
 
 fun Nation.toGetDto(): GetNationDto {
@@ -21,20 +22,20 @@ fun List<Nation>.toGetDtoList(): List<GetNationDto> {
     }
 }
 
-fun Nation.toGetWithChildrenDto(): GetNationWithChildrenDto {
+fun Nation.toGetWithChildrenDto(
+    riderIds: List<Long>,
+    cupIds: List<Long>,
+    raceIds: List<Long>,
+): GetNationWithChildrenDto {
     return GetNationWithChildrenDto(
         id = id ?: throw IllegalStateException("Nation must have ID"),
         longName = longName,
         shortName = shortName,
         flagEmoji = flagEmoji,
-        riderIds = riders.map { it.id!! },
-        cupIds = cups.map { it.id!! },
-        raceIds = races.map { it.id!! },
+        riderIds = riderIds,
+        cupIds = cupIds,
+        raceIds = raceIds,
     )
-}
-
-fun List<Nation>.toGetWithChildrenDtoList(): List<GetNationWithChildrenDto> = map {
-    it.toGetWithChildrenDto()
 }
 
 fun Nation.toNationDescriptorDto(): NationDescriptorDto {
@@ -58,6 +59,14 @@ fun PutNationDto.toEntity(
 }
 
 fun PutNationDto.toNewEntity(): Nation {
+    return Nation(
+        longName = longName,
+        shortName = shortName,
+        flagEmoji = flagEmoji
+    )
+}
+
+fun PostNationDto.toNewEntity(): Nation {
     return Nation(
         longName = longName,
         shortName = shortName,

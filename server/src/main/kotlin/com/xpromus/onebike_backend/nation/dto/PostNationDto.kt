@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
 
-data class PutNationDto(
+data class PostNationDto(
     @field:Size(min = 1, max = 50, message = "Long name of a nation must be between 1 and 50 characters")
     @field:Pattern(regexp = "^[a-zA-ZöäüÖÄÜß]*$", message = "Long nation name filter contains invalid characters")
     val longName: String,

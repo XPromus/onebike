@@ -12,56 +12,36 @@ class Nation(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var longName: String = "",
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var shortName: String = "",
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var flagEmoji: String = "",
 
     @OneToMany(
         mappedBy = "nation",
         cascade = [CascadeType.ALL],
-        orphanRemoval = true
+        orphanRemoval = true,
+        fetch = FetchType.LAZY,
     )
     var riders: MutableList<Rider> = mutableListOf(),
 
     @OneToMany(
         mappedBy = "nation",
         cascade = [CascadeType.ALL],
-        orphanRemoval = true
+        orphanRemoval = true,
+        fetch = FetchType.LAZY,
     )
     var cups: MutableList<Cup> = mutableListOf(),
 
     @OneToMany(
         mappedBy = "nation",
         cascade = [CascadeType.ALL],
-        orphanRemoval = true
+        orphanRemoval = true,
+        fetch = FetchType.LAZY,
     )
     var races: MutableList<Race> = mutableListOf(),
-) {
-
-    fun addRider(
-        rider: Rider
-    ) {
-        riders.add(rider)
-        rider.nation = this
-    }
-
-    fun addCup(
-        cup: Cup
-    ) {
-        cups.add(cup)
-        cup.nation = this
-    }
-
-    fun addRace(
-        race: Race
-    ) {
-        races.add(race)
-        race.nation = this
-    }
-
-}
+)

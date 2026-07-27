@@ -1,13 +1,6 @@
 package com.xpromus.onebike_backend.nation
 
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 
-interface NationRepository : JpaRepository<Nation, Long> {
-
-    fun existsNationByLongNameIsOrShortNameIsOrFlagEmojiIs(
-        longName: String,
-        shortName: String,
-        flagEmoji: String
-    ): Boolean
-
-}
+interface NationRepository : JpaRepository<Nation, Long>, JpaSpecificationExecutor<Nation>

@@ -1,14 +1,25 @@
 package com.xpromus.onebike_backend
 
+import com.xpromus.onebike_backend.cup.CupRepository
 import com.xpromus.onebike_backend.nation.NationRepository
 import com.xpromus.onebike_backend.nation.NationService
+import com.xpromus.onebike_backend.race.RaceRepository
+import com.xpromus.onebike_backend.rider.RiderRepository
 import io.mockk.mockk
 import kotlin.test.Test
 
 class NationUnitTests {
 
     private val nationRepository: NationRepository = mockk<NationRepository>()
-    private val nationService: NationService = NationService(nationRepository)
+    private val riderRepository: RiderRepository = mockk<RiderRepository>()
+    private val cupRepository: CupRepository = mockk<CupRepository>()
+    private val raceRepository: RaceRepository = mockk<RaceRepository>()
+    private val nationService: NationService = NationService(
+        nationRepository,
+        riderRepository,
+        cupRepository,
+        raceRepository,
+    )
 
     @Test
     fun `creates nation and returns GetNationDto`() {

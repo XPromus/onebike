@@ -9,7 +9,6 @@ import com.xpromus.onebike_backend.nation.mapper.toEntity
 import com.xpromus.onebike_backend.nation.mapper.toGetDto
 import com.xpromus.onebike_backend.nation.mapper.toGetDtoList
 import com.xpromus.onebike_backend.nation.mapper.toGetWithChildrenDto
-import com.xpromus.onebike_backend.nation.mapper.toGetWithChildrenDtoList
 import com.xpromus.onebike_backend.nation.mapper.toNationDescriptorDto
 import com.xpromus.onebike_backend.nation.mapper.toNewEntity
 import com.xpromus.onebike_backend.race.Race
@@ -80,16 +79,9 @@ class NationMapperUnitTest {
         )
     }
 
-    fun getExpectedGetNationDtoWithChildrenList(): List<GetNationWithChildrenDto> {
-        return listOf(
-            getExpectedGetNationDtoWithChildren(),
-            getExpectedGetNationDtoWithChildren(),
-            getExpectedGetNationDtoWithChildren(),
-        )
-    }
-
     fun getExpectedNationDescriptorDto(): NationDescriptorDto {
         return NationDescriptorDto(
+            id = 1L,
             longName = "Germany",
             shortName = "GER",
             flagEmoji = "🇩🇪"
@@ -98,7 +90,6 @@ class NationMapperUnitTest {
 
     fun getGivenPutNationDto(): PutNationDto {
         return PutNationDto(
-            id = 1L,
             longName = "Spain",
             shortName = "ESP",
             flagEmoji = "🇪🇸",
@@ -136,18 +127,27 @@ class NationMapperUnitTest {
     fun `toGetWithChildrenDto returns correct GetNationWithChildrenDto`() {
         val nation = getGivenNation()
         val expected = getExpectedGetNationDtoWithChildren()
-        val actual = nation.toGetWithChildrenDto()
+        val actual = nation.toGetWithChildrenDto(
+            riderIds = listOf(1L, 2L, 3L),
+            cupIds = listOf(1L, 2L, 3L),
+            raceIds = listOf(1L, 2L, 3L),
+        )
 
         assertEquals(expected, actual)
     }
 
     @Test
-    fun `toGetWithChildrenDtoList returns correct list of GetNationWithChildrenDto`() {
-        val nationList = getGivenNationList()
-        val expected = getExpectedGetNationDtoWithChildrenList()
-        val actual = nationList.toGetWithChildrenDtoList()
+    fun `toGetWithChildrenDto returns empty lists when no children`() {
+        val nation = getGivenNation()
+        val actual = nation.toGetWithChildrenDto(
+            riderIds = emptyList(),
+            cupIds = emptyList(),
+            raceIds = emptyList(),
+        )
 
-        assertEquals(expected, actual)
+        assertEquals(emptyList(), actual.riderIds)
+        assertEquals(emptyList(), actual.cupIds)
+        assertEquals(emptyList(), actual.raceIds)
     }
 
     @Test
