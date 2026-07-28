@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 
 @RestController
-@RequestMapping("/races")
+@RequestMapping("api/v1/races")
 class RaceController(
     private val raceService: RaceService
 ) {

@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/teams")
+@RequestMapping("api/v1/teams")
 class TeamController(
     private val teamService: TeamService
 ) {

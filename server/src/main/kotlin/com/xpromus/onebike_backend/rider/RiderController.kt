@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/riders")
+@RequestMapping("api/v1/riders")
 class RiderController(
     private val riderService: RiderService
 ) {
