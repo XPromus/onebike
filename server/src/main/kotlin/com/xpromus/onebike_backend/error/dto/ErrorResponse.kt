@@ -1,12 +1,11 @@
 package com.xpromus.onebike_backend.error.dto
 
-import kotlin.time.Clock
-import kotlin.time.Instant
+import java.time.Instant
 
 data class ErrorResponse(
     val status: Int,
     val error: String,
     val message: String?,
     val path: String,
-    val timestamp: Instant = Clock.System.now(),
+    val timestamp: Instant = Instant.now(),
 )

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size
 import java.time.Instant
 import java.time.LocalDate
 
-data class PutRaceDto(
+data class PostRaceDto(
     @field:Size(
         min = RaceValidation.RACE_NAME_SIZE_MIN,
         max = RaceValidation.RACE_NAME_SIZE_MAX,

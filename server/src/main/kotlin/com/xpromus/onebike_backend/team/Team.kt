@@ -31,8 +31,8 @@ class Team(
     var teamDescription: String = "",
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nation_id")
-    var nationality: Nation = Nation(),
+    @JoinColumn(name = "nation_id", nullable = false)
+    var nation: Nation = Nation(),
 
     @OneToMany(
         mappedBy = "team",

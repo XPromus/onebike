@@ -5,6 +5,6 @@ data class GetTeamDto(
     val teamName: String,
     val shortName: String,
     val teamDescription: String,
-    val nationalityId: Long,
+    val nationId: Long,
     val riderIds: List<Long>
 )

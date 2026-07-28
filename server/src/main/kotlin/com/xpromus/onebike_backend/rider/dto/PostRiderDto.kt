@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
 import java.time.LocalDate
 
-data class PutRiderDto(
+data class PostRiderDto(
     @field:Size(
         min = RiderValidation.FIRST_NAME_SIZE_MIN,
         max = RiderValidation.FIRST_NAME_SIZE_MAX,

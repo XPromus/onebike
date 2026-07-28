@@ -1,46 +1,37 @@
 package com.xpromus.onebike_backend.team.mapper
 
 import com.xpromus.onebike_backend.nation.Nation
-import com.xpromus.onebike_backend.nation.mapper.toNationDescriptorDto
-import com.xpromus.onebike_backend.rider.mapper.toRiderDescriptorDto
+import com.xpromus.onebike_backend.nation.dto.NationDescriptorDto
+import com.xpromus.onebike_backend.rider.dto.RiderDescriptorDto
 import com.xpromus.onebike_backend.team.Team
-import com.xpromus.onebike_backend.team.dto.GetTeamDto
-import com.xpromus.onebike_backend.team.dto.GetTeamWithChildrenDto
-import com.xpromus.onebike_backend.team.dto.PutTeamDto
-import com.xpromus.onebike_backend.team.dto.TeamDescriptorDto
+import com.xpromus.onebike_backend.team.dto.*
 
-fun Team.toGetTeamDto(): GetTeamDto {
+fun Team.toGetTeamDto(
+    nationId: Long,
+    riderIds: List<Long>
+): GetTeamDto {
     return GetTeamDto(
         id = id!!,
         teamName = teamName,
         shortName = shortName,
         teamDescription = teamDescription,
-        nationalityId = nationality.id!!,
-        riderIds = riders.map { it.id!! }
+        nationId = nationId,
+        riderIds = riderIds
     )
 }
 
-fun List<Team>.toGetTeamDtoList(): List<GetTeamDto> {
-    return map {
-        it.toGetTeamDto()
-    }
-}
-
-fun Team.toGetTeamWithChildrenDto(): GetTeamWithChildrenDto {
+fun Team.toGetTeamWithChildrenDto(
+    nation: NationDescriptorDto,
+    riders: List<RiderDescriptorDto>
+): GetTeamWithChildrenDto {
     return GetTeamWithChildrenDto(
         id = id!!,
         teamName = teamName,
         shortName = shortName,
         teamDescription = teamDescription,
-        nation = nationality.toNationDescriptorDto(),
-        riders = riders.map { it.toRiderDescriptorDto() }
+        nation = nation,
+        riders = riders
     )
-}
-
-fun List<Team>.toGetTeamWithChildrenDtoList(): List<GetTeamWithChildrenDto> {
-    return map {
-        it.toGetTeamWithChildrenDto()
-    }
 }
 
 fun Team.toTeamDescriptorDto(): TeamDescriptorDto {
@@ -52,12 +43,6 @@ fun Team.toTeamDescriptorDto(): TeamDescriptorDto {
     )
 }
 
-fun List<Team>.toTeamDescriptorDtoList(): List<TeamDescriptorDto> {
-    return map {
-        it.toTeamDescriptorDto()
-    }
-}
-
 fun PutTeamDto.toEntity(
     original: Team,
     nation: Nation
@@ -67,7 +52,7 @@ fun PutTeamDto.toEntity(
         teamName = teamName,
         shortName = shortName,
         teamDescription = teamDescription,
-        nationality = nation,
+        nation = nation,
         riders = original.riders
     )
 }
@@ -79,6 +64,17 @@ fun PutTeamDto.toNewEntity(
         teamName = teamName,
         shortName = shortName,
         teamDescription = teamDescription,
-        nationality = nation,
+        nation = nation,
+    )
+}
+
+fun PostTeamDto.toNewEntity(
+    nation: Nation
+): Team {
+    return Team(
+        teamName = teamName,
+        shortName = shortName,
+        teamDescription = teamDescription,
+        nation = nation,
     )
 }

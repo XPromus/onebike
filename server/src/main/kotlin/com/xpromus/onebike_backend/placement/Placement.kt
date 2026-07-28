@@ -4,7 +4,7 @@ import com.xpromus.onebike_backend.race.Race
 import com.xpromus.onebike_backend.rider.Rider
 import jakarta.persistence.*
 
-@Entity
+@Entity(name = "placement")
 @Table(name = "placements")
 class Placement(
     @Id
@@ -24,7 +24,7 @@ class Placement(
     @JoinColumn(name = "rider_id")
     var rider: Rider = Rider(),
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "race_id")
     var race: Race = Race(),
 )

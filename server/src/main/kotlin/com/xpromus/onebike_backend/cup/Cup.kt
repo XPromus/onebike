@@ -15,7 +15,7 @@ class Cup(
     var cupName: String = "",
 
     @Column(nullable = true)
-    var url: String? = "",
+    var url: String?,
 
     @OneToMany(
         mappedBy = "cup",

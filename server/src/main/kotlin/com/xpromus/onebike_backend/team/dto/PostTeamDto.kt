@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
 
-data class PutTeamDto(
+data class PostTeamDto(
     @field:Size(
         min = TeamValidation.TEAM_NAME_SIZE_MIN,
         max = TeamValidation.TEAM_NAME_SIZE_MAX,

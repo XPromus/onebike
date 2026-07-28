@@ -80,7 +80,7 @@ class CupController(
         @Valid @ModelAttribute filter: CupFilter,
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "20") pageSize: Int,
-        @RequestParam(name = "sortBy", defaultValue = "cupName") sortBy: CupSortField,
+        @RequestParam(name = "sortBy", defaultValue = "CUP_NAME") sortBy: CupSortField,
         @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
     ): ResponseEntity<Page<GetCupDto>> {
         val sort = Sort.by(sortDirection.toSortDir(), sortBy.propertyName)

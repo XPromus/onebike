@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
 
-data class PutPlacementDto(
+data class PostPlacementDto(
     val points: Int,
 
     val finishTimeInSeconds: Int,

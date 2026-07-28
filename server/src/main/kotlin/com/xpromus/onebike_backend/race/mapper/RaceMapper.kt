@@ -1,52 +1,49 @@
 package com.xpromus.onebike_backend.race.mapper
 
 import com.xpromus.onebike_backend.cup.Cup
-import com.xpromus.onebike_backend.cup.mapper.toCupDescriptorDto
+import com.xpromus.onebike_backend.cup.dto.CupDescriptorDto
 import com.xpromus.onebike_backend.nation.Nation
-import com.xpromus.onebike_backend.nation.mapper.toNationDescriptorDto
-import com.xpromus.onebike_backend.placement.mapper.toPlacementDescriptorDtoList
+import com.xpromus.onebike_backend.nation.dto.NationDescriptorDto
+import com.xpromus.onebike_backend.placement.dto.PlacementDescriptorDto
 import com.xpromus.onebike_backend.race.Race
 import com.xpromus.onebike_backend.race.dto.GetRaceDto
 import com.xpromus.onebike_backend.race.dto.GetRaceWithChildrenDto
+import com.xpromus.onebike_backend.race.dto.PostRaceDto
 import com.xpromus.onebike_backend.race.dto.PutRaceDto
 import com.xpromus.onebike_backend.race.dto.RaceDescriptorDto
 
-fun Race.toGetRaceDto(): GetRaceDto {
+fun Race.toGetRaceDto(
+    placementIds: List<Long>,
+    nationId: Long,
+    cupId: Long?,
+): GetRaceDto {
     return GetRaceDto(
         id = id!!,
         raceName = raceName,
         lengthInKm = lengthInKm,
         raceDate = raceDate,
         startTime = startTime,
-        nationId = nation.id!!,
-        cupId = cup?.let { it.id!! },
-        placementIds = placements.map {
-            it.id!!
-        }
+        nationId = nationId,
+        cupId = cupId,
+        placementIds = placementIds
     )
 }
 
-fun List<Race>.toGetRaceDtoList(): List<GetRaceDto> = map {
-    it.toGetRaceDto()
-}
-
-fun Race.toGetRaceWithChildrenDto(): GetRaceWithChildrenDto {
+fun Race.toGetRaceWithChildrenDto(
+    placements: List<PlacementDescriptorDto>,
+    nation: NationDescriptorDto,
+    cup: CupDescriptorDto?,
+): GetRaceWithChildrenDto {
     return GetRaceWithChildrenDto(
         id = id!!,
         raceName = raceName,
         lengthInKm = lengthInKm,
         raceDate = raceDate,
         startTime = startTime,
-        nation = nation.toNationDescriptorDto(),
-        cup = cup?.toCupDescriptorDto(),
-        placements = placements.toPlacementDescriptorDtoList(),
+        nation = nation,
+        cup = cup,
+        placements = placements,
     )
-}
-
-fun List<Race>.toGetRaceWithChildrenDtoList(): List<GetRaceWithChildrenDto> {
-    return map {
-        it.toGetRaceWithChildrenDto()
-    }
 }
 
 fun Race.toRaceDescriptorDto(): RaceDescriptorDto {
@@ -59,16 +56,10 @@ fun Race.toRaceDescriptorDto(): RaceDescriptorDto {
     )
 }
 
-fun List<Race>.toRaceDescriptorDtoList(): List<RaceDescriptorDto> {
-    return map {
-        it.toRaceDescriptorDto()
-    }
-}
-
 fun PutRaceDto.toEntity(
     original: Race,
     nation: Nation,
-    cup: Cup?
+    cup: Cup?,
 ): Race {
     return Race(
         id = original.id,
@@ -84,7 +75,21 @@ fun PutRaceDto.toEntity(
 
 fun PutRaceDto.toNewEntity(
     nation: Nation,
-    cup: Cup?
+    cup: Cup?,
+): Race {
+    return Race(
+        raceName = raceName,
+        lengthInKm = lengthInKm,
+        raceDate = raceDate,
+        startTime = startTime,
+        nation = nation,
+        cup = cup,
+    )
+}
+
+fun PostRaceDto.toNewEntity(
+    nation: Nation,
+    cup: Cup?,
 ): Race {
     return Race(
         raceName = raceName,

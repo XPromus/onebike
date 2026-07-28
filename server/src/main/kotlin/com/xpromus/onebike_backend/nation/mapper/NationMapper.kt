@@ -16,12 +16,6 @@ fun Nation.toGetDto(): GetNationDto {
     )
 }
 
-fun List<Nation>.toGetDtoList(): List<GetNationDto> {
-    return map {
-        it.toGetDto()
-    }
-}
-
 fun Nation.toGetWithChildrenDto(
     riderIds: List<Long>,
     cupIds: List<Long>,

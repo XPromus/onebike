@@ -4,44 +4,39 @@ import com.xpromus.onebike_backend.placement.Placement
 import com.xpromus.onebike_backend.placement.dto.GetPlacementDto
 import com.xpromus.onebike_backend.placement.dto.GetPlacementWithChildrenDto
 import com.xpromus.onebike_backend.placement.dto.PlacementDescriptorDto
+import com.xpromus.onebike_backend.placement.dto.PostPlacementDto
 import com.xpromus.onebike_backend.placement.dto.PutPlacementDto
 import com.xpromus.onebike_backend.race.Race
-import com.xpromus.onebike_backend.race.mapper.toRaceDescriptorDto
+import com.xpromus.onebike_backend.race.dto.RaceDescriptorDto
 import com.xpromus.onebike_backend.rider.Rider
-import com.xpromus.onebike_backend.rider.mapper.toRiderDescriptorDto
+import com.xpromus.onebike_backend.rider.dto.RiderDescriptorDto
 
-fun Placement.toGetPlacementDto(): GetPlacementDto {
+fun Placement.toGetPlacementDto(
+    riderId: Long,
+    raceId: Long,
+): GetPlacementDto {
     return GetPlacementDto(
         id = id!!,
-        raceId = race.id!!,
+        raceId = raceId,
         finishTimeInSeconds = finishTimeInSeconds,
         finishStatus = finishStatus,
         points = points,
-        riderId = rider.id!!
+        riderId = riderId
     )
 }
 
-fun List<Placement>.toGetPlacementDtoList(): List<GetPlacementDto> {
-    return map {
-        it.toGetPlacementDto()
-    }
-}
-
-fun Placement.toGetPlacementWithChildrenDto(): GetPlacementWithChildrenDto {
+fun Placement.toGetPlacementWithChildrenDto(
+    rider: RiderDescriptorDto,
+    race: RaceDescriptorDto,
+): GetPlacementWithChildrenDto {
     return GetPlacementWithChildrenDto(
         id = id!!,
-        race = race.toRaceDescriptorDto(),
+        race = race,
         finishTimeInSeconds = finishTimeInSeconds,
         finishStatus = finishStatus,
         points = points,
-        rider = rider.toRiderDescriptorDto()
+        rider = rider
     )
-}
-
-fun List<Placement>.toGetPlacementWithChildrenDtoList(): List<GetPlacementWithChildrenDto> {
-    return map {
-        it.toGetPlacementWithChildrenDto()
-    }
 }
 
 fun Placement.toPlacementDescriptorDto(): PlacementDescriptorDto {
@@ -54,16 +49,10 @@ fun Placement.toPlacementDescriptorDto(): PlacementDescriptorDto {
     )
 }
 
-fun List<Placement>.toPlacementDescriptorDtoList(): List<PlacementDescriptorDto> {
-    return map {
-        it.toPlacementDescriptorDto()
-    }
-}
-
 fun PutPlacementDto.toEntity(
     original: Placement,
     race: Race,
-    rider: Rider
+    rider: Rider,
 ): Placement {
     return Placement(
         id = original.id,
@@ -77,7 +66,20 @@ fun PutPlacementDto.toEntity(
 
 fun PutPlacementDto.toNewEntity(
     race: Race,
-    rider: Rider
+    rider: Rider,
+): Placement {
+    return Placement(
+        points = points,
+        finishTimeInSeconds = finishTimeInSeconds,
+        finishStatus = finishStatus,
+        race = race,
+        rider = rider,
+    )
+}
+
+fun PostPlacementDto.toNewEntity(
+    race: Race,
+    rider: Rider,
 ): Placement {
     return Placement(
         points = points,

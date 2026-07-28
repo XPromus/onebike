@@ -2,20 +2,22 @@ package com.xpromus.onebike_backend.placement
 
 import com.xpromus.onebike_backend.placement.dto.GetPlacementDto
 import com.xpromus.onebike_backend.placement.dto.GetPlacementWithChildrenDto
+import com.xpromus.onebike_backend.placement.dto.PlacementFilter
+import com.xpromus.onebike_backend.placement.dto.PostPlacementDto
 import com.xpromus.onebike_backend.placement.dto.PutPlacementDto
 import com.xpromus.onebike_backend.placement.mapper.toEntity
 import com.xpromus.onebike_backend.placement.mapper.toGetPlacementDto
-import com.xpromus.onebike_backend.placement.mapper.toGetPlacementDtoList
-import com.xpromus.onebike_backend.placement.mapper.toGetPlacementWithChildrenDtoList
+import com.xpromus.onebike_backend.placement.mapper.toGetPlacementWithChildrenDto
 import com.xpromus.onebike_backend.placement.mapper.toNewEntity
-import com.xpromus.onebike_backend.race.Race
+import com.xpromus.onebike_backend.placement.specification.PlacementSpecification
 import com.xpromus.onebike_backend.race.RaceRepository
-import com.xpromus.onebike_backend.rider.Rider
+import com.xpromus.onebike_backend.race.mapper.toRaceDescriptorDto
 import com.xpromus.onebike_backend.rider.RiderRepository
-import com.xpromus.onebike_backend.util.SortDirection
-import com.xpromus.onebike_backend.util.toSortDir
+import com.xpromus.onebike_backend.rider.mapper.toRiderDescriptorDto
 import jakarta.persistence.EntityNotFoundException
-import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -23,85 +25,147 @@ import org.springframework.transaction.annotation.Transactional
 class PlacementService(
     private val placementRepository: PlacementRepository,
     private val riderRepository: RiderRepository,
-    private val raceRepository: RaceRepository
+    private val raceRepository: RaceRepository,
 ) {
 
-    fun getPlacementsByRace(
-        raceId: Long,
-        sortBy: String,
-        sortDirection: SortDirection
-    ): List<GetPlacementDto> {
-        return placementRepository.findPlacementsByRaceId(
-            raceId = raceId,
-            sort = Sort.by(
-                sortDirection.toSortDir(),
-                sortBy
+    @Transactional(readOnly = true)
+    fun findPlacements(
+        filter: PlacementFilter,
+        pageable: Pageable,
+    ): Page<GetPlacementDto> {
+        val spec = PlacementSpecification.withFilter(filter)
+        val placements = placementRepository.findAll(spec, pageable)
+
+        return placements.map { placement ->
+            placement.toGetPlacementDto(
+                riderId = placement.rider.id!!,
+                raceId = placement.race.id!!
             )
-        ).toGetPlacementDtoList()
+        }
     }
 
     @Transactional(readOnly = true)
-    fun getPlacementsByRaceWithChildren(
-        raceId: Long,
-        sortBy: String,
-        sortDirection: SortDirection
-    ): List<GetPlacementWithChildrenDto> {
-        return placementRepository.findPlacementsByRaceId(
-            raceId = raceId,
-            sort = Sort.by(
-                sortDirection.toSortDir(),
-                sortBy
-            )
-        ).toGetPlacementWithChildrenDtoList()
-    }
+    fun findPlacementsWithChildren(
+        filter: PlacementFilter,
+        pageable: Pageable,
+    ): Page<GetPlacementWithChildrenDto> {
+        val spec = PlacementSpecification.withFilter(filter)
+        val placements = placementRepository.findAll(spec, pageable)
 
-    fun getCupPlacementsByRider(
-        riderId: Long,
-        sortBy: String,
-        sortDirection: SortDirection
-    ): List<GetPlacementDto> {
-        return placementRepository.getPlacementsByRiderId(
-            riderId = riderId,
-            sort = Sort.by(
-                sortDirection.toSortDir(),
-                sortBy
+        val riderIds = placements.map { it.rider.id!! }.toSet()
+        val riders = riderRepository
+            .findAllById(riderIds)
+            .associateBy { it.id }
+
+        val raceIds = placements.map { it.race.id!! }.toSet()
+        val races = raceRepository
+            .findAllById(raceIds)
+            .associateBy { it.id }
+
+        return placements.map { placement ->
+            placement.toGetPlacementWithChildrenDto(
+                rider = riders[placement.rider.id]!!.toRiderDescriptorDto(),
+                race = races[placement.race.id]!!.toRaceDescriptorDto()
             )
-        ).toGetPlacementDtoList()
+        }
     }
 
     @Transactional(readOnly = true)
-    fun getCupPlacementsByRiderWithChildren(
-        riderId: Long,
-        sortBy: String,
-        sortDirection: SortDirection
-    ): List<GetPlacementWithChildrenDto> {
-        return placementRepository.getPlacementsByRiderId(
-            riderId = riderId,
-            sort = Sort.by(
-                sortDirection.toSortDir(),
-                sortBy
+    fun findPlacementsByRace(
+        raceId: Long,
+        filter: PlacementFilter,
+        pageable: Pageable,
+    ): Page<GetPlacementDto> {
+        val spec = PlacementSpecification.withFilter(filter, raceId = raceId)
+        val placements = placementRepository.findAll(spec, pageable)
+
+        return placements.map { placement ->
+            placement.toGetPlacementDto(
+                riderId = placement.rider.id!!,
+                raceId = placement.race.id!!
             )
-        ).toGetPlacementWithChildrenDtoList()
+        }
+    }
+
+    @Transactional(readOnly = true)
+    fun findPlacementsByRaceWithChildren(
+        raceId: Long,
+        filter: PlacementFilter,
+        pageable: Pageable,
+    ): Page<GetPlacementWithChildrenDto> {
+        val spec = PlacementSpecification.withFilter(filter, raceId = raceId)
+        val placements = placementRepository.findAll(spec, pageable)
+
+        val riderIds = placements.map { it.rider.id!! }.toSet()
+        val riders = riderRepository
+            .findAllById(riderIds)
+            .associateBy { it.id }
+
+        val race = raceRepository.findById(raceId).orElseThrow { EntityNotFoundException() }
+
+        return placements.map { placement ->
+            placement.toGetPlacementWithChildrenDto(
+                rider = riders[placement.rider.id]!!.toRiderDescriptorDto(),
+                race = race.toRaceDescriptorDto()
+            )
+        }
+    }
+
+    @Transactional(readOnly = true)
+    fun findPlacementsByRider(
+        riderId: Long,
+        filter: PlacementFilter,
+        pageable: Pageable,
+    ): Page<GetPlacementDto> {
+        val spec = PlacementSpecification.withFilter(filter, riderId = riderId)
+        val placements = placementRepository.findAll(spec, pageable)
+
+        return placements.map { placement ->
+            placement.toGetPlacementDto(
+                riderId = placement.rider.id!!,
+                raceId = placement.race.id!!
+            )
+        }
+    }
+
+    @Transactional(readOnly = true)
+    fun findPlacementsByRiderWithChildren(
+        riderId: Long,
+        filter: PlacementFilter,
+        pageable: Pageable,
+    ): Page<GetPlacementWithChildrenDto> {
+        val spec = PlacementSpecification.withFilter(filter, riderId = riderId)
+        val placements = placementRepository.findAll(spec, pageable)
+
+        val rider = riderRepository.findById(riderId).orElseThrow { EntityNotFoundException() }
+
+        val raceIds = placements.map { it.race.id!! }.toSet()
+        val races = raceRepository
+            .findAllById(raceIds)
+            .associateBy { it.id }
+
+        return placements.map { placement ->
+            placement.toGetPlacementWithChildrenDto(
+                rider = rider.toRiderDescriptorDto(),
+                race = races[placement.race.id]!!.toRaceDescriptorDto()
+            )
+        }
     }
 
     @Transactional
-    fun putCupPlacement(
-        putPlacementDto: PutPlacementDto
-    ): GetPlacementDto {
-        val targetRace: Race = raceRepository
+    fun putPlacement(
+        id: Long,
+        putPlacementDto: PutPlacementDto,
+    ): Pair<GetPlacementDto, Boolean> {
+        val targetRace = raceRepository
             .findById(putPlacementDto.raceId)
-            .orElseThrow {
-                EntityNotFoundException()
-            }
-        val targetRider: Rider = riderRepository
+            .orElseThrow { EntityNotFoundException() }
+        val targetRider = riderRepository
             .findById(putPlacementDto.riderId)
-            .orElseThrow {
-                EntityNotFoundException()
-            }
+            .orElseThrow { EntityNotFoundException() }
 
-        val placement: Placement = putPlacementDto.id?.let {
-            placementRepository.findById(it).orElse(null)
-        }?.let {
+        val existingPlacement = placementRepository.findByIdOrNull(id)
+        val placementToSave = existingPlacement?.let {
             putPlacementDto.toEntity(
                 original = it,
                 race = targetRace,
@@ -114,14 +178,39 @@ class PlacementService(
             )
         }
 
-        return placementRepository.save(
-            placement
-        ).toGetPlacementDto()
+        val savedPlacement = placementRepository.save(placementToSave)
+        return savedPlacement.toGetPlacementDto(
+            riderId = savedPlacement.rider.id!!,
+            raceId = savedPlacement.race.id!!
+        ) to (existingPlacement == null)
     }
 
     @Transactional
-    fun deleteCupPlacement(
-        id: Long
+    fun createPlacement(
+        postPlacementDto: PostPlacementDto,
+    ): GetPlacementDto {
+        val targetRace = raceRepository
+            .findById(postPlacementDto.raceId)
+            .orElseThrow { EntityNotFoundException() }
+        val targetRider = riderRepository
+            .findById(postPlacementDto.riderId)
+            .orElseThrow { EntityNotFoundException() }
+
+        val placementToSave = postPlacementDto.toNewEntity(
+            race = targetRace,
+            rider = targetRider
+        )
+
+        val savedPlacement = placementRepository.save(placementToSave)
+        return savedPlacement.toGetPlacementDto(
+            riderId = savedPlacement.rider.id!!,
+            raceId = savedPlacement.race.id!!
+        )
+    }
+
+    @Transactional
+    fun deletePlacement(
+        id: Long,
     ) {
         placementRepository.deleteById(id)
     }

@@ -2,60 +2,93 @@ package com.xpromus.onebike_backend.race
 
 import com.xpromus.onebike_backend.race.dto.GetRaceDto
 import com.xpromus.onebike_backend.race.dto.GetRaceWithChildrenDto
+import com.xpromus.onebike_backend.race.dto.PostRaceDto
 import com.xpromus.onebike_backend.race.dto.PutRaceDto
+import com.xpromus.onebike_backend.race.dto.RaceFilter
+import com.xpromus.onebike_backend.race.sort.RaceSortField
 import com.xpromus.onebike_backend.util.SortDirection
+import com.xpromus.onebike_backend.util.toSortDir
+import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import java.net.URI
 
 @RestController
-@RequestMapping("api/v1/races")
+@RequestMapping("/api/v1/races")
 class RaceController(
     private val raceService: RaceService
 ) {
 
     @GetMapping
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     fun getRaces(
-        @RequestParam(name = "sortBy", defaultValue = "raceName") sortBy: String,
-        @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
-    ): List<GetRaceDto> {
-        return raceService.getAllRaces(
-            sortBy = sortBy,
-            sortDirection = sortDirection
+        @Valid @ModelAttribute filter: RaceFilter,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "20") pageSize: Int,
+        @RequestParam(name = "sortBy", defaultValue = "RACE_NAME") sortBy: RaceSortField,
+        @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection,
+    ): ResponseEntity<Page<GetRaceDto>> {
+        val sort = Sort.by(sortDirection.toSortDir(), sortBy.propertyName)
+        val boundedSize = pageSize.coerceIn(0, 100)
+        val pageable = PageRequest.of(page, boundedSize, sort)
+
+        val races = raceService.findRaces(
+            filter = filter,
+            pageable = pageable
         )
+
+        return ResponseEntity.ok(races)
     }
 
     @GetMapping("/full")
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     fun getRacesWithChildren(
-        @RequestParam(name = "sortBy", defaultValue = "raceName") sortBy: String,
-        @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
-    ): List<GetRaceWithChildrenDto> {
-        return raceService.getRacesWithChildren(
-            sortBy = sortBy,
-            sortDirection = sortDirection
+        @Valid @ModelAttribute filter: RaceFilter,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "20") pageSize: Int,
+        @RequestParam(name = "sortBy", defaultValue = "RACE_NAME") sortBy: RaceSortField,
+        @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection,
+    ): ResponseEntity<Page<GetRaceWithChildrenDto>> {
+        val sort = Sort.by(sortDirection.toSortDir(), sortBy.propertyName)
+        val boundedSize = pageSize.coerceIn(0, 100)
+        val pageable = PageRequest.of(page, boundedSize, sort)
+
+        val races = raceService.findRacesWithChildren(
+            filter = filter,
+            pageable = pageable
         )
+
+        return ResponseEntity.ok(races)
     }
 
-    @PutMapping
-    @ResponseStatus(value = HttpStatus.OK)
+    @PutMapping("/{id}")
     fun putRace(
-        putRaceDto: PutRaceDto
-    ): GetRaceDto {
-        return raceService.putRace(putRaceDto)
+        @PathVariable id: Long,
+        @Valid @RequestBody putRaceDto: PutRaceDto,
+    ): ResponseEntity<GetRaceDto> {
+        val (body, wasCreated) = raceService.putRace(id, putRaceDto)
+        val status = if (wasCreated) HttpStatus.CREATED else HttpStatus.OK
+        return ResponseEntity(body, status)
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createRace(
+        @Valid @RequestBody postRaceDto: PostRaceDto,
+    ): ResponseEntity<GetRaceDto> {
+        val savedRace = raceService.createRace(postRaceDto)
+        val location = URI.create("/api/v1/races/${savedRace.id}")
+        return ResponseEntity.created(location).body(savedRace)
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteRace(
-        @PathVariable id: Long
+        @PathVariable id: Long,
     ) {
         raceService.deleteRace(id)
     }
