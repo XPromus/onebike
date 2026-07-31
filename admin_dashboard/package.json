@@ -13,10 +13,13 @@
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
 		"test:unit": "vitest",
-		"test": "npm run test:unit -- --run"
+		"test": "npm run test:unit -- --run",
+		"api:spec": "curl -s http://localhost:8080/v3/api-docs -o src/lib/generated/spec.json",
+		"api:generate": "openapi-typescript src/lib/generated/spec.json -o src/lib/types/schema/schema.d.ts -t"
 	},
 	"dependencies": {
-		"class-variance-authority": "^0.7.1"
+		"class-variance-authority": "^0.7.1",
+		"openapi-typescript": "^7.13.0"
 	},
 	"devDependencies": {
 		"@iconify/svelte": "^5.2.2",

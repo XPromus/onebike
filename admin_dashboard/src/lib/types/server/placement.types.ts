@@ -1,40 +1,10 @@
-import type { RaceDescriptorDto } from "./race.types"
-import type { RiderDescriptorDto } from "./rider.types"
+import type { components } from "../schema/schema"
 
-export type GetPlacementDto = {
-    id: number,
-    points: number,
-    finishTimeInSceconds: number,
-    finishStatus: string,
-    riderId: number,
-    raceId: number,
-}
-
-export type GetPlacementWithChildrenDto = {
-    id: number,
-    points: number,
-    finishTimeInSceconds: number,
-    finishStatus: string,
-    rider: RiderDescriptorDto,
-    race: RaceDescriptorDto,
-}
-
-export type PlacementDescriptorDto = {
-    id: number,
-    points: number,
-    finishTimeInSeconds: number,
-    finishStatus: number,
-    raceId: number,
-}
-
-export type PutPlacementDto = {
-    id?: number,
-    points: number,
-    finishTimeInSeconds: number,
-    finishStatus: string,
-    riderId: number,
-    raceId: number,
-}
+export type GetPlacementDto = components["schemas"]["GetPlacementDto"];
+export type GetPlacementWithChildrenDto = components["schemas"]["GetPlacementWithChildrenDto"];
+export type PlacementDescriptorDto = components["schemas"]["PlacementDescriptorDto"];
+export type PostPlacementDto = components["schemas"]["PostPlacementDto"];
+export type PutPlacementDto = components["schemas"]["PutPlacementDto"];
 
 export type GetPlacementsResponse = GetPlacementDto[];
 export type GetPlacementsWithChildrenResponse = GetPlacementWithChildrenDto[];

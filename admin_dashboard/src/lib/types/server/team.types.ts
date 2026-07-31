@@ -1,38 +1,10 @@
-import type { NationDescriptorDto } from "./nation.types";
-import type { RiderDescriptorDto } from "./rider.types";
+import type { components } from "../schema/schema"
 
-export type GetTeamDto = {
-    id: number,
-    teamName: string,
-    shortName: string,
-    teamDescription: string,
-    nationalityId: number,
-    riderIds: number[],
-}
-
-export type GetTeamWithChildrenDto = {
-    id: number,
-    teamName: string,
-    shortName: string,
-    teamDescription: string,
-    nation: NationDescriptorDto,
-    riders: RiderDescriptorDto[],
-}
-
-export type PutTeamDto = {
-    id?: number,
-    teamName: string,
-    shortName: string,
-    teamDescription: string,
-    nationId: number,
-}
-
-export type TeamDescriptorDto = {
-    id: number,
-    teamName: string,
-    shortName: string,
-    teamDescription: string,
-}
+export type GetTeamDto = components["schemas"]["GetTeamDto"];
+export type GetTeamWithChildrenDto = components["schemas"]["GetTeamWithChildrenDto"];
+export type TeamDescriptorDto = components["schemas"]["TeamDescriptorDto"];
+export type PostTeamDto = components["schemas"]["PostTeamDto"];
+export type PutTeamDto = components["schemas"]["PutTeamDto"];
 
 export type GetTeamResponse = GetTeamDto[];
 export type GetTeamWithChildrenResponse = GetTeamWithChildrenDto[];

@@ -1,38 +1,9 @@
-export type GetNationDto = {
-    id: number,
-    longName: string,
-    shortName: string,
-    flagEmoji: string,
-}
+import type { components } from "../schema/schema";
 
-export type GetNationWithChildrenDto = {
-    id: number,
-    longName: string,
-    shortName: string,
-    flagEmoji: string,
-    riderIds: number[],
-    cupIds: number[],
-    raceIds: number[],
-}
-
-export type NationDescriptorDto = {
-    id: number,
-    longName: string,
-    shortName: string,
-    flagEmoji: string,
-};
-
-export type PostNationExistsDto = {
-    longName: string,
-    shortName: string,
-    flagEmoji: string,
-};
-
-export type PutNationDto = {
-    id?: number,
-    longName: string,
-    shortName: string,
-    flagEmoji: string,
-}
+export type GetNationDto = components["schemas"]["GetNationDto"];
+export type GetNationWithChildrenDto = components["schemas"]["GetNationWithChildrenDto"];
+export type NationDescriptorDto = components["schemas"]["NationDescriptorDto"];
+export type PostNationDto = components["schemas"]["PostNationDto"];
+export type PutNationDto = components["schemas"]["PutNationDto"];
 
 export type GetNationResponse = GetNationDto[];
