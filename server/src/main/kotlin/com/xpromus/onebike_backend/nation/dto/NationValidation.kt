@@ -13,4 +13,9 @@ object NationValidation {
     const val SHORT_NAME_PATTERN_MESSAGE = "Short nation name contains invalid characters"
 
     const val FLAG_EMOJI_REQUIRED = "Nation must have a flag emoji"
+
+    const val LONG_NAME_FILTER_SIZE_MESSAGE = "Long name filter can not exceed $LONG_NAME_SIZE_MAX characters"
+    const val LONG_NAME_FILTER_PATTERN_MESSAGE = "Long name filter contains invalid characters"
+    const val SHORT_NAME_FILTER_SIZE_MESSAGE = "Short name filter can not exceed $SHORT_NAME_SIZE_MAX characters"
+    const val SHORT_NAME_FILTER_PATTERN_MESSAGE = "Short name filter contains invalid characters"
 }

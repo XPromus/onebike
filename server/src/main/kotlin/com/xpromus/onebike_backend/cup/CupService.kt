@@ -15,6 +15,7 @@ import com.xpromus.onebike_backend.race.mapper.toRaceDescriptorDto
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -29,7 +30,7 @@ class CupService(
     @Transactional(readOnly = true)
     fun findCups(
         filter: CupFilter,
-        pageable: PageRequest
+        pageable: Pageable
     ): Page<GetCupDto> {
         val spec = CupSpecification.withFilter(filter)
         val cups = cupRepository.findAll(spec, pageable)
@@ -53,7 +54,7 @@ class CupService(
     @Transactional(readOnly = true)
     fun findCupsWithChildren(
         filter: CupFilter,
-        pageable: PageRequest
+        pageable: Pageable
     ): Page<GetCupWithChildrenDto> {
         val spec = CupSpecification.withFilter(filter)
         val cups = cupRepository.findAll(spec, pageable)
@@ -81,7 +82,7 @@ class CupService(
     fun findCupsInNation(
         id: Long,
         filter: CupFilter,
-        pageable: PageRequest
+        pageable: Pageable
     ): Page<GetCupDto> {
         val spec = CupSpecification.withFilter(filter)
         val cups = cupRepository.findAllByNationId(
@@ -130,8 +131,10 @@ class CupService(
         }
 
         val savedCup = cupRepository.save(cupToSave)
+        val raceIds = raceRepository.findIdsByCupId(savedCup.id!!)
+
         return savedCup.toGetCupDto(
-            raceIds = emptyList(),
+            raceIds = raceIds,
             nationId = savedCup.nation.id!!
         ) to (existingCup == null)
     }
@@ -151,8 +154,10 @@ class CupService(
         )
 
         val savedCup = cupRepository.save(cupToSave)
+        val raceIds = raceRepository.findIdsByCupId(savedCup.id!!)
+
         return savedCup.toGetCupDto(
-            raceIds = emptyList(),
+            raceIds = raceIds,
             nationId = savedCup.nation.id!!
         )
     }

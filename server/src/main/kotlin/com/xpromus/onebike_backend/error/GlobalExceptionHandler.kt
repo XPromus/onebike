@@ -1,7 +1,7 @@
 package com.xpromus.onebike_backend.error
 
 import com.xpromus.onebike_backend.error.dto.ErrorResponse
-import com.xpromus.onebike_backend.error.excepion.BadRequestException
+import com.xpromus.onebike_backend.error.exception.BadRequestException
 import com.xpromus.onebike_backend.error.mapper.toErrorResponse
 import jakarta.persistence.EntityNotFoundException
 import jakarta.servlet.http.HttpServletRequest

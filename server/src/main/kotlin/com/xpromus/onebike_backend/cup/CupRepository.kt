@@ -17,9 +17,6 @@ interface CupRepository : JpaRepository<Cup, Long>, JpaSpecificationExecutor<Cup
         pageable: Pageable
     ): Page<Cup>
 
-    fun findAllByCupNameLike(cupName: String, sort: Sort?): MutableList<Cup>
-    fun findCupsByCupNameLike(cupName: String, sort: Sort?): MutableList<Cup>
-
     @Query("SELECT c.nation.id, c.id FROM cup c WHERE c.nation.id IN :nationIds")
     fun findIdsByNationIds(
         @Param("nationIds") nationIds: Collection<Long>

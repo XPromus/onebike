@@ -1,14 +1,20 @@
 package com.xpromus.onebike_backend.team
 
-import com.xpromus.onebike_backend.team.dto.GetTeamDto
-import com.xpromus.onebike_backend.team.dto.GetTeamWithChildrenDto
-import com.xpromus.onebike_backend.team.dto.PutTeamDto
+import com.xpromus.onebike_backend.team.dto.*
+import com.xpromus.onebike_backend.team.sort.TeamSortField
 import com.xpromus.onebike_backend.util.SortDirection
+import com.xpromus.onebike_backend.util.toSortDir
+import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.net.URI
 
 @RestController
-@RequestMapping("/teams")
+@RequestMapping("/api/v1/teams")
 class TeamController(
     private val teamService: TeamService
 ) {
@@ -16,33 +22,63 @@ class TeamController(
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     fun getTeams(
-        @RequestParam(name = "sortBy", defaultValue = "teamName") sortBy: String,
+        @Valid @ModelAttribute filter: TeamFilter,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "20") pageSize: Int,
+        @RequestParam(name = "sortBy", defaultValue = "TEAM_NAME") sortBy: TeamSortField,
         @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
-    ): List<GetTeamDto> {
-        return teamService.getTeams(
-            sortBy = sortBy,
-            sortDirection = sortDirection
+    ): ResponseEntity<Page<GetTeamDto>> {
+        val sort = Sort.by(sortDirection.toSortDir(), sortBy.propertyName)
+        val boundedSize = pageSize.coerceIn(0, 100)
+        val pageable = PageRequest.of(page, boundedSize, sort)
+
+        val teams: Page<GetTeamDto> = teamService.findTeams(
+            filter = filter,
+            pageable = pageable,
         )
+
+        return ResponseEntity.ok(teams)
     }
 
     @GetMapping("/full")
     @ResponseStatus(HttpStatus.OK)
     fun getTeamsWithChildren(
-        @RequestParam(name = "sortBy", defaultValue = "teamName") sortBy: String,
+        @Valid @ModelAttribute filter: TeamFilter,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "20") pageSize: Int,
+        @RequestParam(name = "sortBy", defaultValue = "TEAM_NAME") sortBy: TeamSortField,
         @RequestParam(name = "sortDir", defaultValue = "ASCENDING") sortDirection: SortDirection
-    ): List<GetTeamWithChildrenDto> {
-        return teamService.getTeamsWithChildren(
-            sortBy = sortBy,
-            sortDirection = sortDirection
+    ): ResponseEntity<Page<GetTeamWithChildrenDto>> {
+        val sort = Sort.by(sortDirection.toSortDir(), sortBy.propertyName)
+        val boundedSize = pageSize.coerceIn(0, 100)
+        val pageable = PageRequest.of(page, boundedSize, sort)
+
+        val teams: Page<GetTeamWithChildrenDto> = teamService.findTeamsWithChildren(
+            filter = filter,
+            pageable = pageable
         )
+
+        return ResponseEntity.ok(teams)
     }
 
-    @PutMapping
-    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
     fun putTeam(
-        putTeamDto: PutTeamDto
-    ): GetTeamDto {
-        return teamService.putTeam(putTeamDto)
+        @PathVariable id: Long,
+        @Valid @RequestBody putTeamDto: PutTeamDto
+    ): ResponseEntity<GetTeamDto> {
+        val (body, wasCreated) = teamService.putTeam(id, putTeamDto)
+        val status = if (wasCreated) HttpStatus.CREATED else HttpStatus.OK
+        return ResponseEntity(body, status)
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createTeam(
+        @Valid @RequestBody postTeamDto: PostTeamDto
+    ): ResponseEntity<GetTeamDto> {
+        val savedTeam = teamService.createTeam(postTeamDto)
+        val location = URI.create("/api/v1/teams/${savedTeam.id}")
+        return ResponseEntity.created(location).body(savedTeam)
     }
 
     @DeleteMapping("/{id}")

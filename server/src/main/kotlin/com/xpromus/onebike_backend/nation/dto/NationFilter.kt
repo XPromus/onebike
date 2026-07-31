@@ -13,21 +13,21 @@ data class NationFilter(
 
     @field:Size(
         max = NationValidation.LONG_NAME_SIZE_MAX,
-        message = NationValidation.LONG_NAME_SIZE_MESSAGE
+        message = NationValidation.LONG_NAME_FILTER_SIZE_MESSAGE
     )
     @field:Pattern(
         regexp = CommonValidation.TEXT_REGEX,
-        message = NationValidation.LONG_NAME_PATTERN_MESSAGE
+        message = NationValidation.LONG_NAME_FILTER_PATTERN_MESSAGE
     )
     val longName: String?,
 
     @field:Size(
         max = NationValidation.SHORT_NAME_SIZE_MAX,
-        message = NationValidation.SHORT_NAME_SIZE_MESSAGE
+        message = NationValidation.SHORT_NAME_FILTER_SIZE_MESSAGE
     )
     @field:Pattern(
         regexp = CommonValidation.TEXT_REGEX,
-        message = NationValidation.SHORT_NAME_PATTERN_MESSAGE
+        message = NationValidation.SHORT_NAME_FILTER_PATTERN_MESSAGE
     )
     val shortName: String?,
 )

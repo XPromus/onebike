@@ -1,11 +1,7 @@
 package com.xpromus.onebike_backend.nation
 
 import com.xpromus.onebike_backend.cup.CupRepository
-import com.xpromus.onebike_backend.nation.dto.GetNationDto
-import com.xpromus.onebike_backend.nation.dto.GetNationWithChildrenDto
-import com.xpromus.onebike_backend.nation.dto.NationFilter
-import com.xpromus.onebike_backend.nation.dto.PostNationDto
-import com.xpromus.onebike_backend.nation.dto.PutNationDto
+import com.xpromus.onebike_backend.nation.dto.*
 import com.xpromus.onebike_backend.nation.mapper.toEntity
 import com.xpromus.onebike_backend.nation.mapper.toGetDto
 import com.xpromus.onebike_backend.nation.mapper.toGetWithChildrenDto
@@ -14,7 +10,7 @@ import com.xpromus.onebike_backend.nation.specification.NationSpecification
 import com.xpromus.onebike_backend.race.RaceRepository
 import com.xpromus.onebike_backend.rider.RiderRepository
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -29,7 +25,7 @@ class NationService(
     @Transactional(readOnly = true)
     fun findNations(
         filter: NationFilter,
-        pageable: PageRequest
+        pageable: Pageable
     ): Page<GetNationDto> {
         val spec = NationSpecification.withFilter(filter)
         return nationRepository.findAll(spec, pageable).map {
@@ -40,7 +36,7 @@ class NationService(
     @Transactional(readOnly = true)
     fun findNationsWithChildren(
         filter: NationFilter,
-        pageable: PageRequest
+        pageable: Pageable
     ): Page<GetNationWithChildrenDto> {
         val spec = NationSpecification.withFilter(filter)
         val nations = nationRepository.findAll(spec, pageable)
