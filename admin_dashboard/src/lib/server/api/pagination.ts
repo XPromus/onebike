@@ -1,9 +1,29 @@
+import { parseErrorResponse } from "./errors";
+
+export type SortDir = "ASCENDING" | "DESCENDING";
+
 export type PageParams = {
     page?: number;
     pageSize?: number;
     sortBy?: string;
-    sortDir?: "ASCENDING" | "DESCENDING";
+    sortDir?: SortDir;
 };
+
+export const readEnum = <T extends string>(
+    value: string | null, 
+    allowed: readonly T[], 
+    fallback: T
+): T => {
+    return allowed.includes(value as T) ? (value as T) : fallback;
+}
+
+export const readInt = (
+    value: string | null, 
+    fallback: number
+): number => {
+    const parsed = value === null ? NaN : parseInt(value, 10);
+    return Number.isNaN(parsed) ? fallback : parsed;
+}
 
 export const getPage = async <T>(
     url: string, 
@@ -28,7 +48,7 @@ export const getPage = async <T>(
 	const response = await fetchFn(fullUrl);
 
 	if (!response.ok) {
-		throw new Error(`Request to ${url} failed: ${response.status}`);
+		throw await parseErrorResponse(response);
 	}
 
 	return response.json();
