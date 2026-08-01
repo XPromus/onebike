@@ -24,7 +24,7 @@ export const toRiderWithChildren = (
         dateOfBirth: new Date(rider.dateOfBirth),
         placements: rider.placements,
         nation: rider.nation,
-        team: rider.team
+        team: rider.team ?? null
     } satisfies RiderWithChildren;
 }
 

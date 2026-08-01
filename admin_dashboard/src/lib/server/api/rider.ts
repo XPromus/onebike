@@ -17,7 +17,7 @@ export const putRider = async (
         dateOfBirth: "",
         placementIds: [],
         nationId: 0,
-        teamId: null
+        teamId: undefined
     } satisfies GetRiderDto;
     //TODO: Implement
 }

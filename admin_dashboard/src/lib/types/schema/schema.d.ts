@@ -385,13 +385,13 @@ export type components = {
         };
         GetTeamDto: {
             /** Format: int64 */
-            id?: number;
-            teamName?: string;
-            shortName?: string;
-            teamDescription?: string;
+            id: number;
+            teamName: string;
+            shortName: string;
+            teamDescription: string;
             /** Format: int64 */
-            nationId?: number;
-            riderIds?: number[];
+            nationId: number;
+            riderIds: number[];
         };
         PutRiderDto: {
             firstName?: string;
@@ -405,14 +405,14 @@ export type components = {
         };
         GetRiderDto: {
             /** Format: int64 */
-            id?: number;
-            firstName?: string;
-            lastName?: string;
+            id: number;
+            firstName: string;
+            lastName: string;
             /** Format: date */
-            dateOfBirth?: string;
-            placementIds?: number[];
+            dateOfBirth: string;
+            placementIds: number[];
             /** Format: int64 */
-            nationId?: number;
+            nationId: number;
             /** Format: int64 */
             teamId?: number;
         };
@@ -431,19 +431,19 @@ export type components = {
         };
         GetRaceDto: {
             /** Format: int64 */
-            id?: number;
-            raceName?: string;
+            id: number;
+            raceName: string;
             /** Format: float */
-            lengthInKm?: number;
+            lengthInKm: number;
             /** Format: date */
-            raceDate?: string;
+            raceDate: string;
             /** Format: date-time */
-            startTime?: string;
+            startTime: string;
             /** Format: int64 */
-            nationId?: number;
+            nationId: number;
             /** Format: int64 */
             cupId?: number;
-            placementIds?: number[];
+            placementIds: number[];
         };
         PutPlacementDto: {
             /** Format: int32 */
@@ -458,16 +458,16 @@ export type components = {
         };
         GetPlacementDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: int32 */
-            points?: number;
+            points: number;
             /** Format: int32 */
-            finishTimeInSeconds?: number;
-            finishStatus?: string;
+            finishTimeInSeconds: number;
+            finishStatus: string;
             /** Format: int64 */
-            riderId?: number;
+            riderId: number;
             /** Format: int64 */
-            raceId?: number;
+            raceId: number;
         };
         PutNationDto: {
             longName?: string;
@@ -476,10 +476,10 @@ export type components = {
         };
         GetNationDto: {
             /** Format: int64 */
-            id?: number;
-            longName?: string;
-            shortName?: string;
-            flagEmoji?: string;
+            id: number;
+            longName: string;
+            shortName: string;
+            flagEmoji: string;
         };
         PutCupDto: {
             cupName?: string;
@@ -489,12 +489,12 @@ export type components = {
         };
         GetCupDto: {
             /** Format: int64 */
-            id?: number;
-            cupName?: string;
+            id: number;
+            cupName: string;
             url?: string;
-            raceIds?: number[];
+            raceIds: number[];
             /** Format: int64 */
-            nationId?: number;
+            nationId: number;
         };
         PostTeamDto: {
             teamName?: string;
@@ -590,19 +590,19 @@ export type components = {
         };
         GetTeamWithChildrenDto: {
             /** Format: int64 */
-            id?: number;
-            teamName?: string;
-            shortName?: string;
-            teamDescription?: string;
-            nation?: components["schemas"]["NationDescriptorDto"];
-            riders?: components["schemas"]["RiderDescriptorDto"][];
+            id: number;
+            teamName: string;
+            shortName: string;
+            teamDescription: string;
+            nation: components["schemas"]["NationDescriptorDto"];
+            riders: components["schemas"]["RiderDescriptorDto"][];
         };
         NationDescriptorDto: {
             /** Format: int64 */
-            id?: number;
-            longName?: string;
-            shortName?: string;
-            flagEmoji?: string;
+            id: number;
+            longName: string;
+            shortName: string;
+            flagEmoji: string;
         };
         PageGetTeamWithChildrenDto: {
             /** Format: int64 */
@@ -624,11 +624,11 @@ export type components = {
         };
         RiderDescriptorDto: {
             /** Format: int64 */
-            id?: number;
-            firstName?: string;
-            lastName?: string;
+            id: number;
+            firstName: string;
+            lastName: string;
             /** Format: date */
-            dateOfBirth?: string;
+            dateOfBirth: string;
         };
         RiderFilter: {
             /** Format: int64 */
@@ -662,13 +662,13 @@ export type components = {
         };
         GetRiderWithChildrenDto: {
             /** Format: int64 */
-            id?: number;
-            firstName?: string;
-            lastName?: string;
+            id: number;
+            firstName: string;
+            lastName: string;
             /** Format: date */
-            dateOfBirth?: string;
-            placements?: components["schemas"]["PlacementDescriptorDto"][];
-            nation?: components["schemas"]["NationDescriptorDto"];
+            dateOfBirth: string;
+            placements: components["schemas"]["PlacementDescriptorDto"][];
+            nation: components["schemas"]["NationDescriptorDto"];
             team?: components["schemas"]["TeamDescriptorDto"];
         };
         PageGetRiderWithChildrenDto: {
@@ -691,21 +691,21 @@ export type components = {
         };
         PlacementDescriptorDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: int32 */
-            points?: number;
+            points: number;
             /** Format: int32 */
-            finishTimeInSeconds?: number;
-            finishStatus?: string;
+            finishTimeInSeconds: number;
+            finishStatus: string;
             /** Format: int64 */
-            raceId?: number;
+            raceId: number;
         };
         TeamDescriptorDto: {
             /** Format: int64 */
-            id?: number;
-            teamName?: string;
-            shortName?: string;
-            teamDescription?: string;
+            id: number;
+            teamName: string;
+            shortName: string;
+            teamDescription: string;
         };
         RaceFilter: {
             /** Format: int64 */
@@ -750,23 +750,23 @@ export type components = {
         };
         CupDescriptorDto: {
             /** Format: int64 */
-            id?: number;
-            cupName?: string;
+            id: number;
+            cupName: string;
             url?: string;
         };
         GetRaceWithChildrenDto: {
             /** Format: int64 */
-            id?: number;
-            raceName?: string;
+            id: number;
+            raceName: string;
             /** Format: float */
-            lengthInKm?: number;
+            lengthInKm: number;
             /** Format: date */
-            raceDate?: string;
+            raceDate: string;
             /** Format: date-time */
-            startTime?: string;
-            nation?: components["schemas"]["NationDescriptorDto"];
+            startTime: string;
+            nation: components["schemas"]["NationDescriptorDto"];
             cup?: components["schemas"]["CupDescriptorDto"];
-            placements?: components["schemas"]["PlacementDescriptorDto"][];
+            placements: components["schemas"]["PlacementDescriptorDto"][];
         };
         PageGetRaceWithChildrenDto: {
             /** Format: int64 */
@@ -823,14 +823,14 @@ export type components = {
         };
         GetPlacementWithChildrenDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: int32 */
-            points?: number;
+            points: number;
             /** Format: int32 */
-            finishTimeInSeconds?: number;
-            finishStatus?: string;
-            rider?: components["schemas"]["RiderDescriptorDto"];
-            race?: components["schemas"]["RaceDescriptorDto"];
+            finishTimeInSeconds: number;
+            finishStatus: string;
+            rider: components["schemas"]["RiderDescriptorDto"];
+            race: components["schemas"]["RaceDescriptorDto"];
         };
         PageGetPlacementWithChildrenDto: {
             /** Format: int64 */
@@ -852,14 +852,14 @@ export type components = {
         };
         RaceDescriptorDto: {
             /** Format: int64 */
-            id?: number;
-            raceName?: string;
+            id: number;
+            raceName: string;
             /** Format: float */
-            lengthInKm?: number;
+            lengthInKm: number;
             /** Format: date */
-            raceDate?: string;
+            raceDate: string;
             /** Format: date-time */
-            startTime?: string;
+            startTime: string;
         };
         NationFilter: {
             /** Format: int64 */
@@ -887,13 +887,13 @@ export type components = {
         };
         GetNationWithChildrenDto: {
             /** Format: int64 */
-            id?: number;
-            longName?: string;
-            shortName?: string;
-            flagEmoji?: string;
-            riderIds?: number[];
-            cupIds?: number[];
-            raceIds?: number[];
+            id: number;
+            longName: string;
+            shortName: string;
+            flagEmoji: string;
+            riderIds: number[];
+            cupIds: number[];
+            raceIds: number[];
         };
         PageGetNationWithChildrenDto: {
             /** Format: int64 */
@@ -938,11 +938,11 @@ export type components = {
         };
         GetCupWithChildrenDto: {
             /** Format: int64 */
-            id?: number;
-            cupName?: string;
+            id: number;
+            cupName: string;
             url?: string;
-            races?: components["schemas"]["RaceDescriptorDto"][];
-            nation?: components["schemas"]["NationDescriptorDto"];
+            races: components["schemas"]["RaceDescriptorDto"][];
+            nation: components["schemas"]["NationDescriptorDto"];
         };
         PageGetCupWithChildrenDto: {
             /** Format: int64 */
