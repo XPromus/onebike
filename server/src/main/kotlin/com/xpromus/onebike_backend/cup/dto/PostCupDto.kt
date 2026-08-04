@@ -2,6 +2,7 @@ package com.xpromus.onebike_backend.cup.dto
 
 import com.xpromus.onebike_backend.error.validator.CommonValidation
 import com.xpromus.onebike_backend.error.validator.ValidUrl
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Positive
@@ -17,6 +18,7 @@ data class PostCupDto(
         regexp = CommonValidation.TEXT_REGEX,
         message = CupValidation.CUP_NAME_PATTERN_MESSAGE
     )
+    @field:Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     val cupName: String,
 
     @field:ValidUrl(
@@ -27,5 +29,6 @@ data class PostCupDto(
 
     @field:NotNull(message = CupValidation.NATION_ID_NOT_NULL_MESSAGE)
     @field:Positive(message = CupValidation.NATION_ID_POSITIVE_MESSAGE)
+    @field:Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     val nationId: Long
 )

@@ -1,6 +1,7 @@
 package com.xpromus.onebike_backend.team.dto
 
 import com.xpromus.onebike_backend.error.validator.CommonValidation
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Positive
@@ -16,6 +17,7 @@ data class PutTeamDto(
         regexp = CommonValidation.TEXT_REGEX,
         message = TeamValidation.TEAM_NAME_PATTERN_MESSAGE
     )
+    @field:Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     val teamName: String,
 
     @field:Size(
@@ -27,15 +29,18 @@ data class PutTeamDto(
         regexp = CommonValidation.TEXT_REGEX,
         message = TeamValidation.SHORT_NAME_PATTERN_MESSAGE
     )
+    @field:Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     val shortName: String,
 
     @field:Size(
         max = TeamValidation.TEAM_DESCRIPTION_SIZE_MAX,
         message = TeamValidation.TEAM_DESCRIPTION_SIZE_MESSAGE
     )
+    @field:Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     val teamDescription: String,
 
     @field:NotNull(message = TeamValidation.NATION_ID_NOT_NULL_MESSAGE)
     @field:Positive(message = TeamValidation.NATION_ID_POSITIVE_MESSAGE)
+    @field:Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     val nationId: Long
 )
