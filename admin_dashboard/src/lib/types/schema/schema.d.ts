@@ -377,9 +377,9 @@ export type webhooks = Record<string, never>;
 export type components = {
     schemas: {
         PutTeamDto: {
-            teamName?: string;
-            shortName?: string;
-            teamDescription?: string;
+            teamName: string;
+            shortName: string;
+            teamDescription: string;
             /** Format: int64 */
             nationId: number;
         };
@@ -394,8 +394,8 @@ export type components = {
             riderIds: number[];
         };
         PutRiderDto: {
-            firstName?: string;
-            lastName?: string;
+            firstName: string;
+            lastName: string;
             /** Format: date */
             dateOfBirth: string;
             /** Format: int64 */
@@ -417,13 +417,13 @@ export type components = {
             teamId?: number;
         };
         PutRaceDto: {
-            raceName?: string;
+            raceName: string;
             /** Format: float */
-            lengthInKm?: number;
+            lengthInKm: number;
             /** Format: date */
-            raceDate?: string;
+            raceDate: string;
             /** Format: date-time */
-            startTime?: string;
+            startTime: string;
             /** Format: int64 */
             nationId: number;
             /** Format: int64 */
@@ -447,10 +447,10 @@ export type components = {
         };
         PutPlacementDto: {
             /** Format: int32 */
-            points?: number;
+            points: number;
             /** Format: int32 */
-            finishTimeInSeconds?: number;
-            finishStatus?: string;
+            finishTimeInSeconds: number;
+            finishStatus: string;
             /** Format: int64 */
             riderId: number;
             /** Format: int64 */
@@ -470,8 +470,8 @@ export type components = {
             raceId: number;
         };
         PutNationDto: {
-            longName?: string;
-            shortName?: string;
+            longName: string;
+            shortName: string;
             flagEmoji: string;
         };
         GetNationDto: {
@@ -482,7 +482,7 @@ export type components = {
             flagEmoji: string;
         };
         PutCupDto: {
-            cupName?: string;
+            cupName: string;
             url?: string;
             /** Format: int64 */
             nationId: number;
@@ -497,15 +497,15 @@ export type components = {
             nationId: number;
         };
         PostTeamDto: {
-            teamName?: string;
-            shortName?: string;
-            teamDescription?: string;
+            teamName: string;
+            shortName: string;
+            teamDescription: string;
             /** Format: int64 */
             nationId: number;
         };
         PostRiderDto: {
-            firstName?: string;
-            lastName?: string;
+            firstName: string;
+            lastName: string;
             /** Format: date */
             dateOfBirth: string;
             /** Format: int64 */
@@ -514,13 +514,13 @@ export type components = {
             teamId?: number;
         };
         PostRaceDto: {
-            raceName?: string;
+            raceName: string;
             /** Format: float */
-            lengthInKm?: number;
+            lengthInKm: number;
             /** Format: date */
-            raceDate?: string;
+            raceDate: string;
             /** Format: date-time */
-            startTime?: string;
+            startTime: string;
             /** Format: int64 */
             nationId: number;
             /** Format: int64 */
@@ -528,22 +528,22 @@ export type components = {
         };
         PostPlacementDto: {
             /** Format: int32 */
-            points?: number;
+            points: number;
             /** Format: int32 */
-            finishTimeInSeconds?: number;
-            finishStatus?: string;
+            finishTimeInSeconds: number;
+            finishStatus: string;
             /** Format: int64 */
             riderId: number;
             /** Format: int64 */
             raceId: number;
         };
         PostNationDto: {
-            longName?: string;
-            shortName?: string;
+            longName: string;
+            shortName: string;
             flagEmoji: string;
         };
         PostCupDto: {
-            cupName?: string;
+            cupName: string;
             url?: string;
             /** Format: int64 */
             nationId: number;
@@ -559,34 +559,34 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetTeamDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         PageableObject: {
+            unpaged?: boolean;
+            /** Format: int32 */
+            pageNumber?: number;
+            paged?: boolean;
+            /** Format: int32 */
+            pageSize?: number;
             /** Format: int64 */
             offset?: number;
             sort?: components["schemas"]["SortObject"];
-            paged?: boolean;
-            /** Format: int32 */
-            pageNumber?: number;
-            /** Format: int32 */
-            pageSize?: number;
-            unpaged?: boolean;
         };
         SortObject: {
-            empty?: boolean;
-            sorted?: boolean;
             unsorted?: boolean;
+            sorted?: boolean;
+            empty?: boolean;
         };
         GetTeamWithChildrenDto: {
             /** Format: int64 */
@@ -609,17 +609,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetTeamWithChildrenDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         RiderDescriptorDto: {
@@ -647,17 +647,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetRiderDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         GetRiderWithChildrenDto: {
@@ -676,17 +676,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetRiderWithChildrenDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         PlacementDescriptorDto: {
@@ -735,17 +735,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetRaceDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         CupDescriptorDto: {
@@ -773,17 +773,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetRaceWithChildrenDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         PlacementFilter: {
@@ -808,17 +808,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetPlacementDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         GetPlacementWithChildrenDto: {
@@ -837,17 +837,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetPlacementWithChildrenDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         RaceDescriptorDto: {
@@ -872,17 +872,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetNationDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         GetNationWithChildrenDto: {
@@ -900,17 +900,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetNationWithChildrenDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         CupFilter: {
@@ -923,17 +923,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetCupDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         GetCupWithChildrenDto: {
@@ -949,17 +949,17 @@ export type components = {
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
-            first?: boolean;
-            last?: boolean;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
             /** Format: int32 */
             size?: number;
             content?: components["schemas"]["GetCupWithChildrenDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
     };
